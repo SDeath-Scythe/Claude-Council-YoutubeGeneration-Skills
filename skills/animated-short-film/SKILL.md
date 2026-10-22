@@ -1,6 +1,6 @@
 ---
 name: animated-short-film
-description: Make a complete 5–7 minute animated short film for YouTube in the wordless silhouette style of Last Soul / Day One Films — idea, story, characters, sets, storyboard, animation, score, sound effects, render, QA and upload package — all drawn in JavaScript, no AI video. Use for any animated short film, story video or channel episode request, even "make a video like <channel>". For explainers or reels under ~90s, the animate skill fits better.
+description: Make a complete 5–7 minute animated short film for YouTube in the wordless silhouette style of Last Soul / Day One Films — idea, story, characters, sets, storyboard, animation, score, sound effects, render, QA and upload package — all drawn in JavaScript, no AI video. Use for any animated short film, story video or channel episode request, even "make a video like this channel". For explainers or reels under ~90s, the animate skill fits better.
 ---
 
 # Animated short film
