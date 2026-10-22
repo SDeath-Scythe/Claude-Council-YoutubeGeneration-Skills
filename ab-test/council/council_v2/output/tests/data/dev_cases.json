@@ -1,0 +1,1646 @@
+[
+ {
+  "input": "Ali Hassan +44 7700 900123 Baghdad Karrada",
+  "expected": {
+   "name": "Ali Hassan",
+   "phone": null,
+   "governorate": "Baghdad",
+   "needs_review": true
+  },
+  "why": "Foreign (UK) mobile must not be accepted as Iraqi.",
+  "source": "builder",
+  "id": "C14"
+ },
+ {
+  "input": "محمد 07212345678 بغداد الكرادة",
+  "expected": {
+   "phone": null,
+   "governorate": "Baghdad",
+   "needs_review": true
+  },
+  "why": "072 prefix is not a valid Iraqi mobile (07[3-9]); must not be accepted.",
+  "source": "builder",
+  "id": "C15"
+ },
+ {
+  "input": "حسين علي\n٠٧٧٠ ٥٥٥ ١٢٣٤\nالنجف حي الأمير يم مدرسة الغدير",
+  "expected": {
+   "name": "حسين علي",
+   "phone": "+9647705551234",
+   "governorate": "Najaf",
+   "address": "~يم مدرسة الغدير"
+  },
+  "why": "Arabic-Indic digits with spaces, dialect 'يم' landmark, unlabelled multi-line.",
+  "source": "builder",
+  "id": "C16"
+ },
+ {
+  "input": "سجاد حميد\n07901234567\nالديوانيه شارع الجمهوري",
+  "expected": {
+   "name": "سجاد حميد",
+   "phone": "+9647901234567",
+   "governorate": "Qadisiyyah",
+   "address": "~شارع الجمهوري"
+  },
+  "why": "ه instead of ة in city name; city maps to governorate.",
+  "source": "builder",
+  "id": "C17"
+ },
+ {
+  "input": "السلام عليكم\nاريد اطلب الساعة السوداء\nالاسم زهراء عباس\nرقمي 07812345678\nالبصرة الجزائر قرب مستشفى الموسوي",
+  "expected": {
+   "name": "زهراء عباس",
+   "phone": "+9647812345678",
+   "governorate": "Basra",
+   "address": "~قرب مستشفى الموسوي"
+  },
+  "why": "Greeting + product line before labelled fields without colons; noise must not leak into name.",
+  "source": "builder",
+  "id": "C18"
+ },
+ {
+  "input": "عمر خالد 07724567890 الموصل الزهور قرب جامع الزهور",
+  "expected": {
+   "name": "عمر خالد",
+   "phone": "+9647724567890",
+   "governorate": "Nineveh",
+   "address": "~الزهور"
+  },
+  "why": "City (Mosul) implies governorate; single unlabelled line.",
+  "source": "builder",
+  "id": "C19"
+ },
+ {
+  "input": "بغداد / المنصور / شارع 14 رمضان\nمحمد عبد الله\n07701239876",
+  "expected": {
+   "name": "محمد عبد الله",
+   "phone": "+9647701239876",
+   "governorate": "Baghdad",
+   "address": "~المنصور"
+  },
+  "why": "Ordinary multi-line order, three-word name with 'عبد', street containing digits that are not a phone.",
+  "source": "builder",
+  "id": "C20"
+ },
+ {
+  "input": "مريم كريم، ديالى بعقوبة قرب سيطرة المفرق",
+  "expected": {
+   "name": "مريم كريم",
+   "phone": null,
+   "governorate": "Diyala",
+   "address": "~قرب سيطرة المفرق",
+   "needs_review": true
+  },
+  "why": "No phone at all must be flagged, other fields still extracted.",
+  "source": "builder",
+  "id": "C21"
+ },
+ {
+  "input": "تكريت حي القادسية قرب الجامعة، الاسم سيف، 07734445566",
+  "expected": {
+   "name": "سيف",
+   "phone": "+9647734445566",
+   "governorate": "Saladin",
+   "address": "~حي القادسية"
+  },
+  "why": "Tikrit -> Saladin; 'القادسية' here is a neighbourhood, must not become Qadisiyyah governorate.",
+  "source": "builder",
+  "id": "C22"
+ },
+ {
+  "input": "حيدر علي 07813456789\nبغداد مدينة الصدر قطاع ٤٤ يم سوق مريدي",
+  "expected": {
+   "name": "حيدر علي",
+   "phone": "+9647813456789",
+   "governorate": "Baghdad",
+   "address": "~مريدي"
+  },
+  "why": "Sadr City sector numbering; 'قطاع ٤٤' digits must not merge with phone",
+  "source": "domain",
+  "id": "C48"
+ },
+ {
+  "input": "الديوانيه حي العسكري قرب مدرسه\n07801112233\nاسراء",
+  "expected": {
+   "name": "اسراء",
+   "phone": "+9647801112233",
+   "governorate": "Qadisiyyah",
+   "address": "~حي العسكري"
+  },
+  "why": "Diwaniyah ه spelling -> Qadisiyyah",
+  "source": "domain",
+  "id": "C49"
+ },
+ {
+  "input": "ام زهراء\n07709871234\nبغداد البياع شارع ٢٠",
+  "expected": {
+   "name": "ام زهراء",
+   "phone": "+9647709871234",
+   "governorate": "Baghdad",
+   "address": "~البياع"
+  },
+  "why": "Women commonly give kunya 'ام X' as name",
+  "source": "domain",
+  "id": "C50"
+ },
+ {
+  "input": "Zakho near Delal bridge, Rebwar 0750 123 9999",
+  "expected": {
+   "phone": "+9647501239999",
+   "governorate": "Duhok",
+   "address": "~Delal"
+  },
+  "why": "City Zakho -> Duhok",
+  "source": "domain",
+  "id": "C51"
+ },
+ {
+  "input": "اريد الطقم اللي سألت عنه\nعلي كريم 07812223344\nالكوت حي الكفاءات",
+  "expected": {
+   "name": "علي كريم",
+   "phone": "+9647812223344",
+   "governorate": "Wasit",
+   "address": "~حي الكفاءات"
+  },
+  "why": "'عنه' (pronoun) must not match Anah (Anbar); product chatter line ignored; Kut -> Wasit",
+  "source": "domain",
+  "id": "C52"
+ },
+ {
+  "input": "mosul al zuhur near jami3 al zuhur, 07701234000, yousif",
+  "expected": {
+   "phone": "+9647701234000",
+   "governorate": "Nineveh",
+   "address": "~zuhur"
+  },
+  "why": "Arabizi with digit-letters (jami3); Mosul -> Nineveh",
+  "source": "domain",
+  "id": "C53"
+ },
+ {
+  "input": "تكريت قرب جامعة تكريت عبدالله 07733334444",
+  "expected": {
+   "phone": "+9647733334444",
+   "governorate": "Saladin"
+  },
+  "why": "Tikrit -> Saladin",
+  "source": "domain",
+  "id": "C54"
+ },
+ {
+  "input": "Name: John\n+44 7700 900123\nErbil Dream City",
+  "expected": {
+   "phone": null,
+   "governorate": "Erbil",
+   "needs_review": true
+  },
+  "why": "UK mobile also starts 07700 locally; must not be read as Iraqi",
+  "source": "domain",
+  "id": "C55"
+ },
+ {
+  "input": "اسمي صلاح الدين خليل\n07501234567\nاربيل عنكاوا قرب كنيسة مار يوسف",
+  "expected": {
+   "name": "صلاح الدين خليل",
+   "phone": "+9647501234567",
+   "governorate": "Erbil",
+   "address": "~عنكاوا"
+  },
+  "why": "Common personal name صلاح الدين collides with Saladin governorate",
+  "source": "domain",
+  "id": "C56"
+ },
+ {
+  "input": "اسمي Ali, رقمي 0781 234 5678, Baghdad الكرادة داخل",
+  "expected": {
+   "name": "Ali",
+   "phone": "+9647812345678",
+   "governorate": "Baghdad",
+   "address": "~الكرادة"
+  },
+  "why": "Code-switched Arabic/English within one line",
+  "source": "domain",
+  "id": "C57"
+ },
+ {
+  "input": "البصره الزبير\n07709876543",
+  "expected": {
+   "phone": "+9647709876543",
+   "governorate": "Basra",
+   "name": null,
+   "needs_review": true
+  },
+  "why": "No name given -> name None, needs_review",
+  "source": "domain",
+  "id": "C58"
+ },
+ {
+  "input": "بغداد زيونة قرب عمارة الاطباء\nمريم جاسم\n07711223344",
+  "expected": {
+   "name": "مريم جاسم",
+   "phone": "+9647711223344",
+   "governorate": "Baghdad",
+   "address": "~زيونة"
+  },
+  "why": "'عمارة' = building, must not trigger Maysan (Amarah); name after address",
+  "source": "domain",
+  "id": "C59"
+ },
+ {
+  "input": "حلبجة\nهيمن 07501112233\nقرب البازار",
+  "expected": {
+   "phone": "+9647501112233",
+   "governorate": "Halabja",
+   "address": "~البازار"
+  },
+  "why": "19th governorate Halabja",
+  "source": "domain",
+  "id": "C60"
+ },
+ {
+  "input": "هەولێر شەقامی ٦٠ مەتری\nئاراس\n07508887766",
+  "expected": {
+   "phone": "+9647508887766",
+   "governorate": "Erbil"
+  },
+  "why": "Sorani-script city name هەولێر",
+  "source": "domain",
+  "id": "C61"
+ },
+ {
+  "input": "الاسم الثلاثي: مرتضى جبار كاظم\nالمحافظة: ذي قار - الشطرة\nالهاتف: ٠٧٨٢-٣٤٥-٦٧٨٩",
+  "expected": {
+   "name": "مرتضى جبار كاظم",
+   "phone": "+9647823456789",
+   "governorate": "Dhi Qar",
+   "address": "~الشطرة"
+  },
+  "why": "'الاسم الثلاثي' label, district inside governorate label, dashed Arabic-Indic digits",
+  "source": "domain",
+  "id": "C62"
+ },
+ {
+  "input": "سيف 07012345678 بغداد الشعب",
+  "expected": {
+   "phone": null,
+   "needs_review": true,
+   "governorate": "Baghdad"
+  },
+  "why": "070 is not a mobile prefix ([3-9] required)",
+  "source": "domain",
+  "id": "C63"
+ },
+ {
+  "input": "حسين فاضل 077012345678 بغداد الشعلة",
+  "expected": {
+   "phone": null,
+   "needs_review": true,
+   "governorate": "Baghdad"
+  },
+  "why": "12-digit number (extra digit) must not be truncated to a valid one",
+  "source": "domain",
+  "id": "C64"
+ },
+ {
+  "input": "ميسان العمارة شارع بغداد قرب الكراج\nالاسم: عباس جواد\n07735556677",
+  "expected": {
+   "name": "عباس جواد",
+   "phone": "+9647735556677",
+   "governorate": "Maysan",
+   "address": "~قرب الكراج"
+  },
+  "why": "'Baghdad street' inside a Maysan address must not override the explicit governorate",
+  "source": "quality",
+  "id": "C80"
+ },
+ {
+  "input": "الاسم: رسل حيدر\nالهاتف: 07601234567\nكربله حي النقيب يم مدرسة الفرات",
+  "expected": {
+   "name": "رسل حيدر",
+   "governorate": "Karbala",
+   "address": "~يم مدرسة الفرات"
+  },
+  "why": "dialect كربله and يم landmark preserved",
+  "source": "quality",
+  "id": "C81"
+ },
+ {
+  "input": "تكريت حي القادسية\nالاسم: ياسر محمود\n07709990011",
+  "expected": {
+   "name": "ياسر محمود",
+   "governorate": "Saladin",
+   "phone": "+9647709990011",
+   "address": "~حي القادسية"
+  },
+  "why": "Tikrit -> Saladin; district named Qadisiyyah must not set governorate Qadisiyyah",
+  "source": "quality",
+  "id": "C82"
+ },
+ {
+  "input": "علي كاظم\n077012345678\nكربلاء حي العباس",
+  "expected": {
+   "phone": null,
+   "needs_review": true,
+   "governorate": "Karbala"
+  },
+  "why": "12-digit number must not be truncated into a valid one",
+  "source": "quality",
+  "id": "C83"
+ },
+ {
+  "input": "الاسم: حسين البصري\nالرقم: 07823334455\nالنجف حي الحنانة",
+  "expected": {
+   "name": "حسين البصري",
+   "phone": "+9647823334455",
+   "governorate": "Najaf",
+   "address": "~حي الحنانة"
+  },
+  "why": "surname Al-Basri must not trigger Basra governorate",
+  "source": "quality",
+  "id": "C84"
+ },
+ {
+  "input": "الاسم علي\n07709998877\nحي الحسين قرب الجامع",
+  "expected": {
+   "phone": "+9647709998877",
+   "governorate": null,
+   "needs_review": true
+  },
+  "why": "Hay al-Hussein exists in many cities: governorate must not be guessed",
+  "source": "quality",
+  "id": "C85"
+ },
+ {
+  "input": "الاسم: حسين جبار\nرقمي ٠٧٧٠ ٥٥٥ ١٢٣٤\nالبصرة الجزائر قرب مستشفى الموسوي",
+  "expected": {
+   "name": "حسين جبار",
+   "phone": "+9647705551234",
+   "governorate": "Basra",
+   "address": "~قرب مستشفى الموسوي"
+  },
+  "why": "Arabic-Indic digits with spaces; district named Al-Jazair (Algeria) must not confuse anything",
+  "source": "quality",
+  "id": "C86"
+ },
+ {
+  "input": "الاسم: نور محمد\nالعنوان: الموصل الزهور",
+  "expected": {
+   "name": "نور محمد",
+   "phone": null,
+   "governorate": "Nineveh",
+   "address": "~الزهور",
+   "needs_review": true
+  },
+  "why": "missing phone flagged; Mosul -> Nineveh",
+  "source": "quality",
+  "id": "C87"
+ },
+ {
+  "input": "😍😍 اريد اطلب\nالاسم: دعاء\nالعنوان: الحلة حي نادر\n📞 07708887766",
+  "expected": {
+   "name": "دعاء",
+   "phone": "+9647708887766",
+   "governorate": "Babylon",
+   "address": "~حي نادر"
+  },
+  "why": "emoji around labels and phone; Hilla -> Babylon",
+  "source": "quality",
+  "id": "C88"
+ },
+ {
+  "input": "الاسم مصطفى احمد\nالرقم 07712345678 او 07501234567\nالنجف حي الامير",
+  "expected": {
+   "name": "مصطفى احمد",
+   "phone": "+9647712345678",
+   "alt_phone": "+9647501234567",
+   "governorate": "Najaf",
+   "address": "~حي الامير"
+  },
+  "why": "two numbers: first is primary, second is alt_phone",
+  "source": "quality",
+  "id": "C89"
+ },
+ {
+  "input": "كرار ٠٧٨٠٥٥٥٤٤٣٣ العماره شارع دجلة",
+  "expected": {
+   "phone": "+9647805554433",
+   "governorate": "Maysan",
+   "address": "~شارع دجلة"
+  },
+  "why": "real Amara (Maysan) with ه spelling, contrast with the 'عمارة = building' case",
+  "source": "skeptic",
+  "id": "C109"
+ },
+ {
+  "input": "الموصل الزهور قرب جامع الزهور\nيوسف عادل\n07701112223",
+  "expected": {
+   "name": "يوسف عادل",
+   "phone": "+9647701112223",
+   "governorate": "Nineveh",
+   "address": "~الزهور"
+  },
+  "why": "ordinary Mosul order, multi-line, address first",
+  "source": "skeptic",
+  "id": "C110"
+ },
+ {
+  "input": "بغداد البياع يم مطعم الساعة\nكاظم جبار 07809876512",
+  "expected": {
+   "name": "كاظم جبار",
+   "phone": "+9647809876512",
+   "governorate": "Baghdad",
+   "address": "~مطعم الساعة"
+  },
+  "why": "'يم' landmark word, address before name/phone",
+  "source": "skeptic",
+  "id": "C111"
+ },
+ {
+  "input": "ئارام 07501472583 حلبجة",
+  "expected": {
+   "phone": "+9647501472583",
+   "governorate": "Halabja",
+   "needs_review": true
+  },
+  "why": "19th governorate; no address -> review",
+  "source": "skeptic",
+  "id": "C112"
+ },
+ {
+  "input": "محمود ٠٧٧١٩٨٧٦٥٤٣ تكريت حي القادسية",
+  "expected": {
+   "phone": "+9647719876543",
+   "governorate": "Saladin",
+   "address": "~حي القادسية"
+  },
+  "why": "Tikrit -> Saladin; 'القادسية' neighbourhood name must not produce Qadisiyyah governorate",
+  "source": "skeptic",
+  "id": "C113"
+ },
+ {
+  "input": "رقمي07801112233 واسمي حيدر سالم من الناصريه شارع الحبوبي",
+  "expected": {
+   "name": "حيدر سالم",
+   "phone": "+9647801112233",
+   "governorate": "Dhi Qar",
+   "address": "~الحبوبي"
+  },
+  "why": "phone glued to a word, inline 'اسمي' phrase ending at 'من', dialect ه spelling of city",
+  "source": "skeptic",
+  "id": "C114"
+ },
+ {
+  "input": "ريبوار 0750 444 3322 زاخو قرب الجسر العباسي",
+  "expected": {
+   "phone": "+9647504443322",
+   "governorate": "Duhok",
+   "address": "~الجسر"
+  },
+  "why": "Zakho city -> Duhok",
+  "source": "skeptic",
+  "id": "C115"
+ },
+ {
+  "input": "فاطمة 07801234567 كركوك",
+  "expected": {
+   "name": "فاطمة",
+   "phone": "+9647801234567",
+   "governorate": "Kirkuk",
+   "address": null,
+   "needs_review": true
+  },
+  "why": "governorate only, no area/landmark -> address missing and flagged",
+  "source": "skeptic",
+  "id": "C116"
+ },
+ {
+  "input": "نور 077012345678 بغداد المنصور",
+  "expected": {
+   "phone": null,
+   "governorate": "Baghdad",
+   "needs_review": true
+  },
+  "why": "12-digit number must be rejected, not trimmed to a valid-looking substring",
+  "source": "skeptic",
+  "id": "C117"
+ },
+ {
+  "input": "الاسم: رنا سعد\nالرقم: 07705551234\nبغداد الكرادة حي بابل قرب مطعم فوانيس",
+  "expected": {
+   "name": "رنا سعد",
+   "phone": "+9647705551234",
+   "governorate": "Baghdad",
+   "address": "~حي بابل"
+  },
+  "why": "'بابل' as a Baghdad neighbourhood must not produce Babylon",
+  "source": "skeptic",
+  "id": "C118"
+ },
+ {
+  "input": "شكرا ❤️❤️",
+  "expected": {
+   "name": null,
+   "phone": null,
+   "governorate": null,
+   "needs_review": true
+  },
+  "why": "non-order message; must not invent a name from 'شكرا'",
+  "source": "skeptic",
+  "id": "C119"
+ },
+ {
+  "input": "الاسم: سجاد\nالرقم: 0781234567\nبعقوبة حي المعلمين",
+  "expected": {
+   "phone": null,
+   "governorate": "Diyala",
+   "needs_review": true
+  },
+  "why": "10-digit national number (missing a digit) must not be padded or reinterpreted",
+  "source": "skeptic",
+  "id": "C120"
+ },
+ {
+  "input": "السلام عليكم\nاريد اطلب القطعة السودة\nالاسم: زينب عباس\nالرقم: 0771 234 5678\nالعنوان: بغداد / الدورة / قرب سوق الدورة",
+  "expected": {
+   "name": "زينب عباس",
+   "phone": "+9647712345678",
+   "governorate": "Baghdad",
+   "address": "~الدورة"
+  },
+  "why": "ordinary labelled order with greeting and product line before it; name must not be the greeting",
+  "source": "skeptic",
+  "id": "C121"
+ },
+ {
+  "input": "الاسم: عباس فاضل الرقم 07831234567 كربله شارع ميثم التمار",
+  "expected": {
+   "name": "عباس فاضل",
+   "phone": "+9647831234567",
+   "governorate": "Karbala",
+   "address": "~ميثم التمار"
+  },
+  "why": "Dialect spelling كربله (ه for اء), labels inline on one line; name must stop at الرقم.",
+  "source": "user",
+  "id": "C140"
+ },
+ {
+  "input": "ابو حيدر 07701234567 البصرة او ميسان",
+  "expected": {
+   "phone": "+9647701234567",
+   "needs_review": true
+  },
+  "why": "Customer gives two governorates: must flag for review.",
+  "source": "user",
+  "id": "C141"
+ },
+ {
+  "input": "07805556677\nبغداد البياع قرب مطعم الساعة\nالاسم سجاد",
+  "expected": {
+   "name": "سجاد",
+   "phone": "+9647805556677",
+   "governorate": "Baghdad",
+   "address": "~مطعم الساعة"
+  },
+  "why": "Name label comes last; phone first.",
+  "source": "user",
+  "id": "C142"
+ },
+ {
+  "input": "07701234567 بغداد مدينة الصدر قطاع 10",
+  "expected": {
+   "phone": "+9647701234567",
+   "governorate": "Baghdad",
+   "address": "~قطاع 10"
+  },
+  "why": "Sector numbers in address must stay in address and not disturb phone.",
+  "source": "user",
+  "id": "C143"
+ },
+ {
+  "input": "+964 0770 123 4567\nبغداد البياع\nسجاد",
+  "expected": {
+   "phone": "+9647701234567",
+   "governorate": "Baghdad",
+   "address": "~البياع"
+  },
+  "why": "Common habit: trunk 0 kept after +964; dropping it invents no digit.",
+  "source": "user",
+  "id": "C144"
+ },
+ {
+  "input": "حلبجة قرب البلدية 07501239999",
+  "expected": {
+   "phone": "+9647501239999",
+   "governorate": "Halabja",
+   "address": "~البلدية"
+  },
+  "why": "19th governorate Halabja must not be mapped to Sulaymaniyah.",
+  "source": "user",
+  "id": "C145"
+ },
+ {
+  "input": "الرقم 0770 123 45",
+  "expected": {
+   "phone": null,
+   "needs_review": true
+  },
+  "why": "Truncated number (9 digits) — reject, do not pad.",
+  "source": "user",
+  "id": "C146"
+ },
+ {
+  "input": "تكريت القادسية 07701230000 ابو احمد",
+  "expected": {
+   "phone": "+9647701230000",
+   "governorate": "Saladin"
+  },
+  "why": "Trap: Tikrit has a neighbourhood called القادسية; governorate is Saladin, not Qadisiyyah.",
+  "source": "user",
+  "id": "C147"
+ },
+ {
+  "input": "عندي طلب ٢ قطعة السعر ٢٥ الف\nالاسم فاطمة حسن\nرقم ٠٧٧١٥٥٥٦٦٦٧\nديالى بعقوبة حي المعلمين",
+  "expected": {
+   "name": "فاطمة حسن",
+   "phone": "+9647715556667",
+   "governorate": "Diyala",
+   "address": "~حي المعلمين"
+  },
+  "why": "Quantity/price digits on another line must not merge into the phone or address.",
+  "source": "user",
+  "id": "C148"
+ },
+ {
+  "input": "ساكن بالحله حي بابل قرب سيطرة الجمعية\n07812349876\nابو فاطمة",
+  "expected": {
+   "phone": "+9647812349876",
+   "governorate": "Babylon",
+   "address": "~حي بابل"
+  },
+  "why": "Prefix ب attached to city (بالحله) and ه/ة spelling.",
+  "source": "user",
+  "id": "C149"
+ },
+ {
+  "input": "مريم كاظم\n07701112233\nاو 07812223344\nالنجف حي الأمير",
+  "expected": {
+   "name": "مريم كاظم",
+   "phone": "+9647701112233",
+   "alt_phone": "+9647812223344",
+   "governorate": "Najaf",
+   "address": "~حي الأمير"
+  },
+  "why": "Second number on its own line prefixed by او; first is primary, second is alt.",
+  "source": "user",
+  "id": "C150"
+ },
+ {
+  "input": "Rawand 07504567890 Duhok, Malta quarter",
+  "expected": {
+   "phone": "+9647504567890",
+   "governorate": "Duhok",
+   "address": "~Malta"
+  },
+  "why": "Duhok in English with comma-separated address.",
+  "source": "user",
+  "id": "C151"
+ },
+ {
+  "input": "السلام عليكم\nاريد القميص الاسود قياس L\nالاسم حسين علي\nالنجف حي الامير قرب مستشفى الحكيم\n07812345670",
+  "expected": {
+   "name": "حسين علي",
+   "phone": "+9647812345670",
+   "governorate": "Najaf",
+   "address": "~حي الامير",
+   "needs_review": false
+  },
+  "why": "Typical multi-line clothing DM with a greeting, a product line, a labelled name and an unlabelled address. Result: PASS",
+  "source": "builder",
+  "id": "R1.1"
+ },
+ {
+  "input": "Ahmed Kareem 07501234567 Basra Ashar near the Corniche",
+  "expected": {
+   "name": "Ahmed Kareem",
+   "phone": "+9647501234567",
+   "governorate": "Basra",
+   "address": "~Corniche"
+  },
+  "why": "Unlabelled single English line in name-phone-place order. Result: PASS",
+  "source": "builder",
+  "id": "R1.2"
+ },
+ {
+  "input": "ديالى بعقوبة حي المعلمين قرب جامع الزهراء\nزينب عباس\n0771 234 5678",
+  "expected": {
+   "name": "زينب عباس",
+   "phone": "+9647712345678",
+   "governorate": "Diyala",
+   "address": "~بعقوبة"
+  },
+  "why": "Address first, then name, then a spaced phone. Generic districts (المعلمين/الزهراء) must not hijack the governorate. Result: PASS",
+  "source": "builder",
+  "id": "R1.3"
+ },
+ {
+  "input": "رقمي 07901234567 والرقم الثاني 07711122233 اسمي مصطفى جاسم من الكوت حي الحسين",
+  "expected": {
+   "name": "مصطفى جاسم",
+   "phone": "+9647901234567",
+   "alt_phone": "+9647711122233",
+   "governorate": "Wasit",
+   "address": "~حي الحسين"
+  },
+  "why": "Two numbers with the و-attached label, and a capital (الكوت = collision alias) after من. Result: PASS",
+  "source": "builder",
+  "id": "R1.4"
+ },
+ {
+  "input": "عمر خالد\n07701112223\nكركوك",
+  "expected": {
+   "name": "عمر خالد",
+   "phone": "+9647701112223",
+   "governorate": "Kirkuk",
+   "address": null,
+   "needs_review": true
+  },
+  "why": "Governorate only, so it must be flagged instead of passed silently. Result: PASS",
+  "source": "builder",
+  "id": "R1.5"
+ },
+ {
+  "input": "hawler, ankawa near Ankawa mall, name: Rawand Aziz, 0750 111 2233",
+  "expected": {
+   "name": "Rawand Aziz",
+   "phone": "+9647501112233",
+   "governorate": "Erbil",
+   "address": "~ankawa"
+  },
+  "why": "Kurdish-flavoured Latin city name, with the label in the middle of the line. Result: PASS",
+  "source": "builder",
+  "id": "R1.6"
+ },
+ {
+  "input": "اسم: نور الهدى محمد / رقم 07716655443 / العنوان: ذي قار الشطرة شارع السوق",
+  "expected": {
+   "name": "نور الهدى محمد",
+   "phone": "+9647716655443",
+   "governorate": "Dhi Qar",
+   "address": "~الشطرة"
+  },
+  "why": "Slash-separated labelled form with a two-word governorate and a district town. Result: PASS",
+  "source": "builder",
+  "id": "R1.7"
+ },
+ {
+  "input": "مساء الخير\nحيدر عباس\nالنجف حي الأنصار قرب مستشفى الصدر\n0781 234 5678",
+  "expected": {
+   "name": "حيدر عباس",
+   "phone": "+9647812345678",
+   "governorate": "Najaf",
+   "address": "~حي الأنصار",
+   "needs_review": false
+  },
+  "why": "Typical multi-line Najaf order. مستشفى الصدر must not trigger مدينة الصدر/Baghdad. PASSED.",
+  "source": "domain",
+  "id": "R1.8"
+ },
+ {
+  "input": "اسمي زهراء كريم من الديوانية حي العصري يم مدرسة المتميزين رقمي 07718889900",
+  "expected": {
+   "name": "زهراء كريم",
+   "phone": "+9647718889900",
+   "governorate": "Qadisiyyah",
+   "address": "~حي العصري"
+  },
+  "why": "اسمي intro, 'يم' landmark, phone at the end, capital-city inference. PASSED.",
+  "source": "domain",
+  "id": "R1.9"
+ },
+ {
+  "input": "Hawler, Ankawa near Ankawa mall. Name: Rebwar Omar. 0750 444 3322",
+  "expected": {
+   "name": "Rebwar Omar",
+   "phone": "+9647504443322",
+   "governorate": "Erbil",
+   "address": "~Ankawa"
+  },
+  "why": "Kurdish-region English order with Hawler and a Korek 075 number. PASSED.",
+  "source": "domain",
+  "id": "R1.10"
+ },
+ {
+  "input": "ام علي\n07901234567\nبغداد شارع فلسطين قرب الجامعة المستنصرية",
+  "expected": {
+   "name": "ام علي",
+   "phone": "+9647901234567",
+   "governorate": "Baghdad",
+   "address": "~شارع فلسطين",
+   "needs_review": false
+  },
+  "why": "Kunya as the name (very common for women ordering). PASSED.",
+  "source": "domain",
+  "id": "R1.11"
+ },
+ {
+  "input": "الاسم مصطفى جاسم الرقم 07809998877 البصرة القبلة قرب جامع الخلفاء",
+  "expected": {
+   "name": "مصطفى جاسم",
+   "phone": "+9647809998877",
+   "governorate": "Basra",
+   "address": "~القبلة"
+  },
+  "why": "Labels without colons, all on one line. PASSED.",
+  "source": "domain",
+  "id": "R1.12"
+ },
+ {
+  "input": "Ali Hassan 07701112233 kirkuk hay al askari near azadi hospital",
+  "expected": {
+   "name": "Ali Hassan",
+   "phone": "+9647701112233",
+   "governorate": "Kirkuk",
+   "address": "~azadi"
+  },
+  "why": "Unlabelled Latin line. PASSED.",
+  "source": "domain",
+  "id": "R1.13"
+ },
+ {
+  "input": "مرحبا اريد القطعة السوداء قياس L\nالعمارة حي الحسين قرب سوق\nعباس فاضل 07712223344",
+  "expected": {
+   "name": "عباس فاضل",
+   "phone": "+9647712223344",
+   "governorate": "Maysan",
+   "address": "~حي الحسين"
+  },
+  "why": "Product line first, and العمارة as the city (not 'building'). PASSED.",
+  "source": "domain",
+  "id": "R1.14"
+ },
+ {
+  "input": "سجاد علي 07734445566 الدورة شارع 60 قرب مطعم",
+  "expected": {
+   "name": "سجاد علي",
+   "phone": "+9647734445566",
+   "governorate": "Baghdad",
+   "address": "~الدورة",
+   "needs_review": false
+  },
+  "why": "Baghdad neighbourhood without the word Baghdad, and a numbered street. PASSED (8/8 via eval_cases.py).",
+  "source": "domain",
+  "id": "R1.15"
+ },
+ {
+  "input": "هلا اريد اطلب القطعة\nاسمي زينب علي\n07901234567\nالنجف حي الأمير قرب مدرسة الغري",
+  "expected": {
+   "name": "زينب علي",
+   "phone": "+9647901234567",
+   "governorate": "Najaf",
+   "address": "~حي الأمير",
+   "needs_review": false
+  },
+  "why": "Typical multi-line DM: product line, then labelled name, bare phone, address. Hamza kept. PASS.",
+  "source": "quality",
+  "id": "R1.16"
+ },
+ {
+  "input": "Ahmed Kareem 0750 111 2233 baghdad zayouna near rafidain bank",
+  "expected": {
+   "name": "Ahmed Kareem",
+   "phone": "+9647501112233",
+   "governorate": "Baghdad",
+   "address": "~rafidain bank",
+   "needs_review": false
+  },
+  "why": "Unlabelled English one-liner, lowercase governorate, 4-3-4 grouping. PASS.",
+  "source": "quality",
+  "id": "R1.17"
+ },
+ {
+  "input": "الاسم حسن جبار\nالرقم 07801112233 والرقم الثاني 07712223344\nديالى بعقوبة حي المعلمين",
+  "expected": {
+   "name": "حسن جبار",
+   "phone": "+9647801112233",
+   "alt_phone": "+9647712223344",
+   "governorate": "Diyala",
+   "address": "~بعقوبة"
+  },
+  "why": "Two phones on one labelled line; a generic neighbourhood next to the governorate. PASS.",
+  "source": "quality",
+  "id": "R1.18"
+ },
+ {
+  "input": "اسمي مصطفى\nرقمي 0770 12 34 567\nالبصرة",
+  "expected": {
+   "name": "مصطفى",
+   "phone": "+9647701234567",
+   "governorate": "Basra",
+   "address": null,
+   "needs_review": true
+  },
+  "why": "Unusual 4-2-2-3 grouping; governorate only, so the address must be flagged. PASS.",
+  "source": "quality",
+  "id": "R1.19"
+ },
+ {
+  "input": "kirkuk, rahimawa near the big mosque\nali 07711223344",
+  "expected": {
+   "name": "ali",
+   "phone": "+9647711223344",
+   "governorate": "Kirkuk",
+   "address": "~rahimawa"
+  },
+  "why": "Address first, name and phone last, lowercase. PASS.",
+  "source": "quality",
+  "id": "R1.20"
+ },
+ {
+  "input": "السلام عليكم\nعنواني اربيل عينكاوة قرب كنيسة مار يوسف\nرقمي 07501234567\nالاسم ريم",
+  "expected": {
+   "name": "ريم",
+   "phone": "+9647501234567",
+   "governorate": "Erbil",
+   "address": "~عينكاوة",
+   "needs_review": false
+  },
+  "why": "Greeting, address label, name label at the end. PASS.",
+  "source": "quality",
+  "id": "R1.21"
+ },
+ {
+  "input": "تمام اريده 07712345678",
+  "expected": {
+   "phone": "+9647712345678",
+   "governorate": null,
+   "needs_review": true
+  },
+  "why": "Customer replies with only a phone; must not invent a governorate. PASS.",
+  "source": "quality",
+  "id": "R1.22"
+ },
+ {
+  "input": "السلام عليكم\nاريد التيشيرت الاسود قياس L\nحسين علي\n07801234567\nالنجف حي الأنصار قرب مستشفى الحكيم",
+  "expected": {
+   "name": "حسين علي",
+   "phone": "+9647801234567",
+   "governorate": "Najaf",
+   "address": "~حي الأنصار",
+   "needs_review": false
+  },
+  "why": "typical multi-line DM with greeting and product line before the order details. Result: PASS",
+  "source": "skeptic",
+  "id": "R1.23"
+ },
+ {
+  "input": "Hi, I'm Zainab. 0750 444 3322. Sulaymaniyah, Salim street near Family Mall",
+  "expected": {
+   "name": "Zainab",
+   "phone": "+9647504443322",
+   "governorate": "Sulaymaniyah",
+   "address": "~Salim street"
+  },
+  "why": "English I'm-intro with a 4-3-4 Korek number. Result: PASS",
+  "source": "skeptic",
+  "id": "R1.24"
+ },
+ {
+  "input": "علي ٠٧٧١٢٣٤٥٦٧٨ و ٠٧٨٠٩٨٧٦٥٤٣ ديالى بعقوبة حي المعلمين",
+  "expected": {
+   "name": "علي",
+   "phone": "+9647712345678",
+   "alt_phone": "+9647809876543",
+   "governorate": "Diyala",
+   "address": "~حي المعلمين"
+  },
+  "why": "two Arabic-Indic numbers joined by و; the excluded generic district must not break things. Result: PASS",
+  "source": "skeptic",
+  "id": "R1.25"
+ },
+ {
+  "input": "مصطفى جاسم\n+964 0770 111 2233\nكركوك شارع الجمهورية",
+  "expected": {
+   "name": "مصطفى جاسم",
+   "phone": "+9647701112233",
+   "governorate": "Kirkuk",
+   "address": "~شارع الجمهورية"
+  },
+  "why": "redundant trunk zero after +964 is very common. Result: PASS (with phone_trunk_zero_removed)",
+  "source": "skeptic",
+  "id": "R1.26"
+ },
+ {
+  "input": "الاسم مريم عباس رقم 07712223344 العنوان واسط الكوت حي الحسين قرب السيطرة",
+  "expected": {
+   "name": "مريم عباس",
+   "phone": "+9647712223344",
+   "governorate": "Wasit",
+   "address": "~الكوت حي الحسين"
+  },
+  "why": "labels without colons on one line; Kut is a collision alias. Result: PASS",
+  "source": "skeptic",
+  "id": "R1.27"
+ },
+ {
+  "input": "ابعثوه لاربيل عنكاوا قرب كنيسة مار يوسف، اسمي ريتا، 07504567890",
+  "expected": {
+   "name": "ريتا",
+   "phone": "+9647504567890",
+   "governorate": "Erbil",
+   "address": "~عنكاوا"
+  },
+  "why": "delivery cue with an attached ل-prefix and the name after the address. Result: PASS",
+  "source": "skeptic",
+  "id": "R1.28"
+ },
+ {
+  "input": "Ali Hassan 07701234567 Basra Al-Ashar near Shanashil hotel",
+  "expected": {
+   "name": "Ali Hassan",
+   "phone": "+9647701234567",
+   "governorate": "Basra",
+   "address": "~Ashar"
+  },
+  "why": "Latin message with an Al- prefixed district. Result: PASS",
+  "source": "skeptic",
+  "id": "R1.29"
+ },
+ {
+  "input": "السلام عليكم حبيبتي اريد الفستان الاسود قياس L\nاسمي زينب علي\nالديوانية حي العروبة قرب مدرسة الزهراء\n07801234567",
+  "expected": {
+   "name": "زينب علي",
+   "phone": "+9647801234567",
+   "governorate": "Qadisiyyah",
+   "address": "~حي العروبة",
+   "needs_review": false
+  },
+  "why": "Typical clothing DM: greeting, product line, اسمي intro, capital city plus district plus landmark. Result: PASS",
+  "source": "user",
+  "id": "R1.30"
+ },
+ {
+  "input": "hi i want to order\nAhmed Kareem\nBaghdad, Zayouna near Zayouna mall\n0771 222 3344",
+  "expected": {
+   "name": "Ahmed Kareem",
+   "phone": "+9647712223344",
+   "governorate": "Baghdad",
+   "address": "~Zayouna",
+   "needs_review": false
+  },
+  "why": "English multi-line order with a spaced number. Result: PASS",
+  "source": "user",
+  "id": "R1.31"
+ },
+ {
+  "input": "مصطفى جاسم\nبصره الجزائر يم مطعم الساعه\n٠٧٧٢٣٤٥٦٧٨٩",
+  "expected": {
+   "name": "مصطفى جاسم",
+   "phone": "+9647723456789",
+   "governorate": "Basra",
+   "address": "~يم مطعم الساعه",
+   "needs_review": false
+  },
+  "why": "Dialect spelling (بصره، يم، ه for ة), Arabic-Indic digits, a generic district name. Result: PASS",
+  "source": "user",
+  "id": "R1.32"
+ },
+ {
+  "input": "Hawler, Ankawa street near Ankawa Mall, Rebwar Aziz 07501112233",
+  "expected": {
+   "name": "Rebwar Aziz",
+   "phone": "+9647501112233",
+   "governorate": "Erbil",
+   "address": "~Ankawa",
+   "needs_review": false
+  },
+  "why": "Kurdish customer, Kurdish city name, name after the address. Result: PASS",
+  "source": "user",
+  "id": "R1.33"
+ },
+ {
+  "input": "اني ام حسين من النجف حي الامير قرب جامع الحكيم رقمي 07812223344 ورقم ابني 07723334455",
+  "expected": {
+   "name": "ام حسين",
+   "phone": "+9647812223344",
+   "alt_phone": "+9647723334455",
+   "governorate": "Najaf",
+   "address": "~حي الامير"
+  },
+  "why": "Kunya name with an اني intro and a second family number. Result: PASS",
+  "source": "user",
+  "id": "R1.34"
+ },
+ {
+  "input": "الاسم: حيدر\nالعنوان: كركوك\nالرقم 07701234567",
+  "expected": {
+   "name": "حيدر",
+   "phone": "+9647701234567",
+   "governorate": "Kirkuk",
+   "address": null,
+   "needs_review": true
+  },
+  "why": "Address is only the city, so the shop must ask for details. Result: PASS",
+  "source": "user",
+  "id": "R1.35"
+ },
+ {
+  "input": "3li 7aydar\nkarbala hay al-askari\n07812345678",
+  "expected": {
+   "name": "3li 7aydar",
+   "phone": "+9647812345678",
+   "governorate": "Karbala",
+   "address": "~askari",
+   "needs_review": false
+  },
+  "why": "Arabizi name and address. Result: PASS",
+  "source": "user",
+  "id": "R1.36"
+ },
+ {
+  "input": "ابعثوه للموصل الزهور قرب جامع ذو النورين. الاسم عمر خالد 07709876543",
+  "expected": {
+   "name": "عمر خالد",
+   "phone": "+9647709876543",
+   "governorate": "Nineveh",
+   "address": "~الزهور"
+  },
+  "why": "Delivery cue, a city with a لل prefix, the label mid-line after a period. Result: PASS",
+  "source": "user",
+  "id": "R1.37"
+ },
+ {
+  "input": "مرحبا اريد اطلب القطعة السودة\nاسمي زهراء عباس\n07801122334\nالنجف حي الأنصار قرب مستشفى الحكيم",
+  "expected": {
+   "name": "زهراء عباس",
+   "phone": "+9647801122334",
+   "governorate": "Najaf",
+   "address": "~حي الأنصار"
+  },
+  "why": "typical multi-line DM with product talk first and 'اسمي' intro",
+  "source": "builder",
+  "id": "R2.1"
+ },
+ {
+  "input": "hi i want 2 pieces, name Ali Kareem, my num 0771 555 6677, Basra al-Jazair street near Ibn Ghazwan",
+  "expected": {
+   "name": "Ali Kareem",
+   "phone": "+9647715556677",
+   "governorate": "Basra",
+   "address": "~Jazair"
+  },
+  "why": "English comma-separated DM with lowercase labels and product quantity",
+  "source": "builder",
+  "id": "R2.2"
+ },
+ {
+  "input": "بغداد/ الشعب / شارع المشتل يم مدرسة الفارابي\nحيدر\n٠٧٥٠٣٣٣٢٢١١",
+  "expected": {
+   "name": "حيدر",
+   "phone": "+9647503332211",
+   "governorate": "Baghdad",
+   "address": "~الشعب"
+  },
+  "why": "address first with slashes, single-word name line, Arabic-Indic digits last",
+  "source": "builder",
+  "id": "R2.3"
+ },
+ {
+  "input": "اريد اطلب، كركوك حي الواسطي، اسمي مصطفى، رقمي 0770 12 34 567",
+  "expected": {
+   "name": "مصطفى",
+   "phone": "+9647701234567",
+   "governorate": "Kirkuk",
+   "address": "~الواسطي"
+  },
+  "why": "Arabic commas, phone typed in irregular digit groups",
+  "source": "builder",
+  "id": "R2.5"
+ },
+ {
+  "input": "Hawler, Ankawa near Ankawa Mall. Rebaz Omar 0750 444 3322",
+  "expected": {
+   "name": "Rebaz Omar",
+   "phone": "+9647504443322",
+   "governorate": "Erbil",
+   "address": "~Ankawa"
+  },
+  "why": "Kurdish city name in Latin, unlabelled name after address",
+  "source": "builder",
+  "id": "R2.6"
+ },
+ {
+  "input": "سلام عليكم\nعلي جاسم\nالبصرة - القبلة - قرب جامع الامام علي\n07812345670\nشكرا",
+  "expected": {
+   "name": "علي جاسم",
+   "phone": "+9647812345670",
+   "governorate": "Basra",
+   "address": "~القبلة"
+  },
+  "why": "greeting and thanks lines around the order; dash-separated address",
+  "source": "builder",
+  "id": "R2.7"
+ },
+ {
+  "input": "اسمي نور الهدى، 07901234567، العنوان قرب الكراج الموحد",
+  "expected": {
+   "name": "نور الهدى",
+   "phone": "+9647901234567",
+   "governorate": null,
+   "needs_review": true
+  },
+  "why": "no governorate at all; must flag instead of guessing",
+  "source": "builder",
+  "id": "R2.8"
+ },
+ {
+  "input": "مرحبا\nالاسم: نور الهدى جبار\nرقم: 07723456789\nالبصرة الحي الصناعي قرب كراج الزبير",
+  "expected": {
+   "name": "نور الهدى جبار",
+   "phone": "+9647723456789",
+   "governorate": "Basra",
+   "address": "~الحي الصناعي",
+   "needs_review": false
+  },
+  "why": "Generic 'الحي الصناعي' together with a stated city must not conflict; كراج الزبير is a landmark. PASSED.",
+  "source": "domain",
+  "id": "R2.9"
+ },
+ {
+  "input": "ابعثوه عالناصرية حي الشهداء قرب جامع الحبوبي، الاسم كرار حسن 07812223344",
+  "expected": {
+   "name": "كرار حسن",
+   "phone": "+9647812223344",
+   "governorate": "Dhi Qar",
+   "address": "~حي الشهداء"
+  },
+  "why": "Dialect contraction عال (pass-1 fix) plus a mid-line name label. PASSED.",
+  "source": "domain",
+  "id": "R2.10"
+ },
+ {
+  "input": "حسين البغدادي 07701234567 الديوانية حي الجمهوري قرب مستشفى الولادة",
+  "expected": {
+   "name": "حسين البغدادي",
+   "phone": "+9647701234567",
+   "governorate": "Qadisiyyah",
+   "address": "~حي الجمهوري",
+   "needs_review": false
+  },
+  "why": "Nisba surname naming another governorate (pass-1 fix). PASSED.",
+  "source": "domain",
+  "id": "R2.11"
+ },
+ {
+  "input": "Name: Hiwa Karim\nPhone: 0750 111 2233\nSlemani, Bakhtiari near Family Mall",
+  "expected": {
+   "name": "Hiwa Karim",
+   "phone": "+9647501112233",
+   "governorate": "Sulaymaniyah",
+   "address": "~Bakhtiari"
+  },
+  "why": "Kurdistan English order with a Korek number. PASSED.",
+  "source": "domain",
+  "id": "R2.12"
+ },
+ {
+  "input": "زينب علي\n07809876543\nكربلاء المقدسة حي العباس قرب مدرسة",
+  "expected": {
+   "name": "زينب علي",
+   "phone": "+9647809876543",
+   "governorate": "Karbala",
+   "address": "~حي العباس",
+   "needs_review": false
+  },
+  "why": "Honorific المقدسة (pass-1 fix). PASSED.",
+  "source": "domain",
+  "id": "R2.13"
+ },
+ {
+  "input": "علي كاظم 07701234567 ساكن بالحي العسكري قرب الجامع",
+  "expected": {
+   "name": "علي كاظم",
+   "phone": "+9647701234567",
+   "governorate": null,
+   "needs_review": true
+  },
+  "why": "Generic quarter with no city: must ask, not guess Wasit. PASSED.",
+  "source": "domain",
+  "id": "R2.14"
+ },
+ {
+  "input": "اسمي مريم 07501234567 اربيل عنكاوة قرب كنيسة مار يوسف",
+  "expected": {
+   "name": "مريم",
+   "phone": "+9647501234567",
+   "governorate": "Erbil",
+   "address": "~عنكاوة"
+  },
+  "why": "Erbil order with the اسمي intro. PASSED.",
+  "source": "domain",
+  "id": "R2.15"
+ },
+ {
+  "input": "الرقم 07901112233 والرقم الثاني 07711112233\nالاسم احمد الرفاعي\nبابل الحلة حي بابل قرب جامع",
+  "expected": {
+   "name": "احمد الرفاعي",
+   "phone": "+9647901112233",
+   "alt_phone": "+9647711112233",
+   "governorate": "Babylon",
+   "address": "~قرب جامع"
+  },
+  "why": "Two labelled phones, a surname that was a pass-1 town alias, and حي بابل. PASSED (8/8 via eval_cases.py).",
+  "source": "domain",
+  "id": "R2.16"
+ },
+ {
+  "input": "مرحبا اريد اطلب\nالاسم: حيدر عبد الكريم\nرقم الهاتف: 0781 234 5678\nالعنوان: الكوت - حي الزهراء - قرب مدرسة الفارابي",
+  "expected": {
+   "name": "حيدر عبد الكريم",
+   "phone": "+9647812345678",
+   "governorate": "Wasit",
+   "address": "~قرب مدرسة الفارابي"
+  },
+  "why": "Typical labelled order with greeting; capital-only city inference (Kut -> Wasit) plus landmark.",
+  "source": "quality",
+  "id": "R2.17"
+ },
+ {
+  "input": "hi, name: Mustafa Kareem, 0750 111 2233, Erbil Ankawa near Ankawa mall, can I pay cash?",
+  "expected": {
+   "name": "Mustafa Kareem",
+   "phone": "+9647501112233",
+   "governorate": "Erbil",
+   "address": "~Ankawa"
+  },
+  "why": "English labelled with payment question appended; checks name stops at comma and chatter does not break fields.",
+  "source": "quality",
+  "id": "R2.18"
+ },
+ {
+  "input": "زينب علي\n٠٧٧١ ٢٣٤ ٥٦٧٨\nالبصرة حي الحسين يم جامع الامام علي",
+  "expected": {
+   "name": "زينب علي",
+   "phone": "+9647712345678",
+   "governorate": "Basra",
+   "address": "~جامع الامام علي"
+  },
+  "why": "Regression check of pass-1 fix: trailing 'علي' in a landmark must be kept; Arabic-Indic digits with spaces.",
+  "source": "quality",
+  "id": "R2.19"
+ },
+ {
+  "input": "سلام عليكم\nاسمي سلام كاظم\n07801234567\nبغداد الشعلة قرب سوق الشعلة",
+  "expected": {
+   "name": "سلام كاظم",
+   "phone": "+9647801234567",
+   "governorate": "Baghdad",
+   "address": "~الشعلة"
+  },
+  "why": "Greeting salam followed by a person named Salam: regression check for the greeting-vs-given-name fix.",
+  "source": "quality",
+  "id": "R2.20"
+ },
+ {
+  "input": "علي 07701234567 النجف الحي الصناعي قرب الكراج",
+  "expected": {
+   "name": "علي",
+   "phone": "+9647701234567",
+   "governorate": "Najaf",
+   "address": "~الحي الصناعي",
+   "needs_review": false
+  },
+  "why": "Regression check of 'الحي' fix: generic neighbourhood word must not cause Wasit conflict.",
+  "source": "quality",
+  "id": "R2.21"
+ },
+ {
+  "input": "الاسم احمد\nالرقم 077012345678\nبغداد زيونة",
+  "expected": {
+   "name": "احمد",
+   "phone": null,
+   "governorate": "Baghdad",
+   "needs_review": true
+  },
+  "why": "12-digit typo number must not be truncated/guessed into a valid phone (no digit guessing).",
+  "source": "quality",
+  "id": "R2.22"
+ },
+ {
+  "input": "Fatima Hassan 07809876543 Najaf, Kufa, near Kufa mosque",
+  "expected": {
+   "name": "Fatima Hassan",
+   "phone": "+9647809876543",
+   "governorate": "Najaf",
+   "address": "~Kufa mosque"
+  },
+  "why": "Unlabelled English single line with district town Kufa; checks name before phone and English landmark.",
+  "source": "quality",
+  "id": "R2.23"
+ },
+ {
+  "input": "محمد جاسم 07712345678 الديوانية حي العروبة قرب مستشفى النسائية والاطفال",
+  "expected": {
+   "name": "محمد جاسم",
+   "phone": "+9647712345678",
+   "governorate": "Qadisiyyah",
+   "address": "~حي العروبة"
+  },
+  "why": "Mid-Euphrates order; capital-only inference and long landmark.",
+  "source": "quality",
+  "id": "R2.24"
+ },
+ {
+  "input": "سلام عليكم\nالاسم: حسين علي\nرقمي 07812345678\nالنجف حي الامير قرب جامع الامام علي",
+  "expected": {
+   "name": "حسين علي",
+   "phone": "+9647812345678",
+   "governorate": "Najaf",
+   "address": "~الامام علي",
+   "needs_review": false
+  },
+  "why": "regression check for the trailing-علي trim fix plus greeting line and labelled name",
+  "source": "skeptic",
+  "id": "R2.25"
+ },
+ {
+  "input": "مرحبا اريد اطلب\nزينب 07701234567\nعالديوانية حي العسكري",
+  "expected": {
+   "name": "زينب",
+   "phone": "+9647701234567",
+   "governorate": "Qadisiyyah",
+   "address": "~حي العسكري"
+  },
+  "why": "dialect contraction عال before a city (pass-1 domain finding)",
+  "source": "skeptic",
+  "id": "R2.26"
+ },
+ {
+  "input": "Name: Mustafa Kareem\n0750 123 4567\nHawler, Ankawa, near Ankawa Mall",
+  "expected": {
+   "name": "Mustafa Kareem",
+   "phone": "+9647501234567",
+   "governorate": "Erbil",
+   "address": "~Ankawa Mall"
+  },
+  "why": "English multi-line with Kurdish city name",
+  "source": "skeptic",
+  "id": "R2.27"
+ },
+ {
+  "input": "علي 0770123456 7 بغداد المنصور",
+  "expected": {
+   "needs_review": true
+  },
+  "why": "10-digit number + stray digit must not be silently joined into a confident number",
+  "source": "skeptic",
+  "id": "R2.28"
+ },
+ {
+  "input": "الاسم: مصطفى الحلي\nالرقم: 07712345678\nبغداد الشعلة قرب سوق الشعلة",
+  "expected": {
+   "name": "مصطفى الحلي",
+   "phone": "+9647712345678",
+   "governorate": "Baghdad",
+   "address": "~الشعلة",
+   "needs_review": false
+  },
+  "why": "nisba surname that is also a town name (Hilla) must not cut the name or cause a conflict",
+  "source": "skeptic",
+  "id": "R2.29"
+ },
+ {
+  "input": "احمد 07701234567 البصرة الحي الصناعي قرب مطعم ابو علي",
+  "expected": {
+   "name": "احمد",
+   "governorate": "Basra",
+   "address": "~ابو علي",
+   "needs_review": false
+  },
+  "why": "الحي generic word + trailing علي, both pass-1 fixes",
+  "source": "skeptic",
+  "id": "R2.30"
+ },
+ {
+  "input": "طلب: قميص اسود XL\nالاسم سجاد كريم\n٠٧٨٠ ١٢٣ ٤٥٦٧\nكربلاء المقدسة - حي الحر - قرب المجمع",
+  "expected": {
+   "name": "سجاد كريم",
+   "phone": "+9647801234567",
+   "governorate": "Karbala",
+   "address": "~حي الحر"
+  },
+  "why": "product line, Arabic-Indic spaced digits, honorific المقدسة, generic-ish district key",
+  "source": "skeptic",
+  "id": "R2.31"
+ },
+ {
+  "input": "07901234567\nام حسين\nواسط الكوت حي الكفاءات",
+  "expected": {
+   "name": "ام حسين",
+   "phone": "+9647901234567",
+   "governorate": "Wasit",
+   "address": "~الكفاءات",
+   "needs_review": false
+  },
+  "why": "kunya name on its own line after the phone",
+  "source": "skeptic",
+  "id": "R2.32"
+ },
+ {
+  "input": "هلو عيوني اريد اطلب\nاسمي زينب علي\nرقمي 0790 555 1234\nالنجف حي الانصار قرب مدرسة الزهراء",
+  "expected": {
+   "name": "زينب علي",
+   "phone": "+9647905551234",
+   "governorate": "Najaf",
+   "address": "~مدرسة الزهراء",
+   "needs_review": false
+  },
+  "why": "typical greeting + 'اسمي'/'رقمي' labels over several short lines with spaced phone",
+  "source": "user",
+  "id": "R2.33"
+ },
+ {
+  "input": "Hi, I'm Mustafa Kareem. 07501112233. Hawler, Ankawa near Ankawa mall",
+  "expected": {
+   "name": "Mustafa Kareem",
+   "phone": "+9647501112233",
+   "governorate": "Erbil",
+   "address": "~Ankawa mall"
+  },
+  "why": "English Kurdistan customer using Hawler and \"I'm\" opener",
+  "source": "user",
+  "id": "R2.34"
+ },
+ {
+  "input": "حجزلي وحده\nحسين علي\nديالى بعقوبة حي المعلمين\n07731234567",
+  "expected": {
+   "name": "حسين علي",
+   "phone": "+9647731234567",
+   "governorate": "Diyala",
+   "address": "~حي المعلمين"
+  },
+  "why": "product chatter line then unlabeled name ending in علي, phone last",
+  "source": "user",
+  "id": "R2.35"
+ },
+ {
+  "input": "Name: نور الهدى\nPhone: 0781 234 5678\nAddress: البصرة، الجزائر، قرب مستشفى الموسوي",
+  "expected": {
+   "name": "نور الهدى",
+   "phone": "+9647812345678",
+   "governorate": "Basra",
+   "address": "~مستشفى الموسوي"
+  },
+  "why": "English labels with Arabic values (common copy-paste template)",
+  "source": "user",
+  "id": "R2.36"
+ },
+ {
+  "input": "اسمي كرار حيدر 07701234567 او 07809876543 الديوانية حي العصري",
+  "expected": {
+   "name": "كرار حيدر",
+   "phone": "+9647701234567",
+   "alt_phone": "+9647809876543",
+   "governorate": "Qadisiyyah",
+   "address": "~حي العصري"
+  },
+  "why": "two numbers joined with او",
+  "source": "user",
+  "id": "R2.37"
+ },
+ {
+  "input": "اسمي حيدر 07801234567 قرب الجامع الكبير",
+  "expected": {
+   "name": "حيدر",
+   "phone": "+9647801234567",
+   "governorate": null,
+   "needs_review": true
+  },
+  "why": "customer forgets the city; must be flagged not guessed",
+  "source": "user",
+  "id": "R2.38"
+ },
+ {
+  "input": "الاسم: سلام عبد الله\nالرقم: 07801234567\nكربلاء حي الحسين قرب جامع الامام علي",
+  "expected": {
+   "name": "سلام عبد الله",
+   "phone": "+9647801234567",
+   "governorate": "Karbala",
+   "address": "~جامع الامام علي"
+  },
+  "why": "realistic re-check of two pass-1 fixes (greeting-word name, trailing علي)",
+  "source": "user",
+  "id": "R2.39"
+ },
+ {
+  "input": "Dilan Omar 07501234567 Slemani, Salim street near Family mall",
+  "expected": {
+   "name": "Dilan Omar",
+   "phone": "+9647501234567",
+   "governorate": "Sulaymaniyah",
+   "address": "~Salim street"
+  },
+  "why": "Kurdish name and Slemani in Latin script",
+  "source": "user",
+  "id": "R2.40"
+ }
+]

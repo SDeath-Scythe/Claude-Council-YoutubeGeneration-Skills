@@ -24,6 +24,8 @@ The A/B exposed a defect in the with-skill film: a bench-sitting shot read as st
 | without skill, run 1 | 98.4 | 91.9 | 99.3 | $6.3 |
 | without skill, run 2 | 99.4 | 97.5 | 98.5 | $5.0 |
 | council v1 | 98.0 | 96.9 | 98.0 | $40.6 |
-| council v2 (sealed holdout, lighter debate) | in progress | | | |
+| council v2 (sealed holdout, lighter debate) | 99.1 | **98.6** | 98.4 | $32.9 |
 
-So far, a strong single agent is already near the ceiling on a well-specified coding task. The council's measured gains were on the harder cases and on avoiding confident wrong answers, at several times the cost. v2 is meant to make the council's extra effort show up as measured generalisation.
+Takeaways. A strong single agent is already near the ceiling on a well-specified coding task, and two runs of it varied a lot (91.9 vs 97.5 on the hard set B). Council v2 scored highest on the hard set and matched the single agent elsewhere, at about 6× the cost. Its own sealed-holdout estimate (100%) was a little optimistic next to the truly unseen tests (98.4–99.1). Use the council where mistakes are expensive and inputs are messy; for a small, clear task, `--stakes lite` or a single agent is enough.
+
+Hidden test sets and graders: `ab-test/hidden-tests/` (`python3 grade.py <dir with dallal_parser>`, `grade_b.py`, `grade_c.py`, `confwrong.py`).

@@ -1,0 +1,1044 @@
+[
+ {
+  "id": "R01",
+  "input": "اريد الكوت الرمادي قياس L\nالاسم احمد\n07701234567\nبغداد زيونة",
+  "expected": {
+   "name": "احمد",
+   "governorate": "Baghdad",
+   "needs_review": false
+  },
+  "why": "grey/coat product line"
+ },
+ {
+  "id": "R02",
+  "input": "اريد القميص الرمادي\nعلي 07701234567 البصرة العشار",
+  "expected": {
+   "name": "علي",
+   "governorate": "Basra",
+   "address": "~العشار"
+  },
+  "why": "grey shirt product line"
+ },
+ {
+  "id": "R03",
+  "input": "بغداد المنصور قرب مطعم الموصل\nسارة 07801234567",
+  "expected": {
+   "governorate": "Baghdad",
+   "address": "~مطعم الموصل",
+   "needs_review": false
+  },
+  "why": "restaurant named after Mosul"
+ },
+ {
+  "id": "R04",
+  "input": "العمارة 12 شقة 4 مجمع بسماية\nبغداد\nزينب 07712345678",
+  "expected": {
+   "governorate": "Baghdad",
+   "address": "~العمارة 12"
+  },
+  "why": "العمارة = building"
+ },
+ {
+  "id": "R05",
+  "input": "منصور كاظم 07701234567 النجف حي الامير",
+  "expected": {
+   "name": "منصور كاظم",
+   "governorate": "Najaf"
+  },
+  "why": "personal name Mansour"
+ },
+ {
+  "id": "R06",
+  "input": "انا بالحلة بس ابعثوه للناصرية حي الشهداء\n07701234567 علي",
+  "expected": {
+   "governorate": "Dhi Qar",
+   "needs_review": true
+  },
+  "why": "delivery cue decides; still flagged"
+ },
+ {
+  "id": "R07",
+  "input": "فاطمة 07801234567 الناصرية",
+  "expected": {
+   "name": "فاطمة",
+   "governorate": "Dhi Qar",
+   "address": null,
+   "needs_review": true
+  },
+  "why": "capital only -> address None"
+ },
+ {
+  "id": "R08",
+  "input": "بـغـداد الكرادة\nمحمد 07701234567",
+  "expected": {
+   "governorate": "Baghdad",
+   "name": "محمد"
+  },
+  "why": "tatweel"
+ },
+ {
+  "id": "R09",
+  "input": "اني من البصرة 07701234567",
+  "expected": {
+   "name": null,
+   "governorate": "Basra",
+   "needs_review": true
+  },
+  "why": "intro + من is not a name"
+ },
+ {
+  "id": "R10",
+  "input": "3li 07701234567 baghdad karrada near al-rahman mosque",
+  "expected": {
+   "name": "3li",
+   "governorate": "Baghdad",
+   "address": "~karrada"
+  },
+  "why": "Arabizi name"
+ },
+ {
+  "id": "R11",
+  "input": "سارة 🌹\n07701234567\nاربيل عنكاوا",
+  "expected": {
+   "name": "سارة",
+   "governorate": "Erbil"
+  },
+  "why": "emoji next to name"
+ },
+ {
+  "id": "R12",
+  "input": "Mansour street no 5, Ahmed 07701234567",
+  "expected": {
+   "name": "Ahmed",
+   "address": "~no 5"
+  },
+  "why": "no = house number"
+ },
+ {
+  "id": "R13",
+  "input": "بغداد الدورة زقاق رقم 5 دار 12\nحسن 07701234567",
+  "expected": {
+   "address": "~زقاق رقم 5",
+   "phone": "+9647701234567"
+  },
+  "why": "رقم as house number"
+ },
+ {
+  "id": "R14",
+  "input": "Ali 44 7700 900123 Baghdad Mansour",
+  "expected": {
+   "needs_review": true,
+   "governorate": "Baghdad",
+   "phone": null
+  },
+  "why": "UK number without +"
+ },
+ {
+  "id": "R15",
+  "input": "ميسان 07701234567 بغداد الكرادة",
+  "expected": {
+   "name": "ميسان",
+   "governorate": "Baghdad"
+  },
+  "why": "person-name governorate"
+ },
+ {
+  "id": "R16",
+  "input": "هلو حبيبي اريد اطلب\nالاسم/ مصطفى كريم\nالرقم/ 07714445566\nالعنوان/ ديالى - بعقوبة - حي المعلمين",
+  "expected": {
+   "name": "مصطفى كريم",
+   "governorate": "Diyala",
+   "address": "~حي المعلمين"
+  },
+  "why": "slash labels"
+ },
+ {
+  "id": "R17",
+  "input": "my name is Ahmed Ali, I live in Basra, Ashar near the corniche. my number is 07801234567",
+  "expected": {
+   "name": "Ahmed Ali",
+   "governorate": "Basra",
+   "address": "~corniche",
+   "phone": "+9647801234567"
+  },
+  "why": "English sentence"
+ },
+ {
+  "id": "R18",
+  "input": "Hi, I want to order the black bag. Send to Erbil, Ankawa near Ankawa Mall. Name: Lana, phone 0750 123 4567",
+  "expected": {
+   "name": "Lana",
+   "governorate": "Erbil",
+   "address": "~Ankawa Mall"
+  },
+  "why": "English with product talk"
+ },
+ {
+  "id": "R19",
+  "input": "اسم: كرار حيدر\nمحافظة: بابل\nالمنطقة: المسيب قرب الجسر\nموبايل: 07805556677",
+  "expected": {
+   "name": "كرار حيدر",
+   "governorate": "Babylon",
+   "address": "~المسيب",
+   "phone": "+9647805556677"
+  },
+  "why": "full labels"
+ },
+ {
+  "id": "R20",
+  "input": "Name: Hawre\nPhone: 07501234567\nCity: Sulaymaniyah\nAddress: Salim street near Family Mall",
+  "expected": {
+   "name": "Hawre",
+   "governorate": "Sulaymaniyah",
+   "address": "~Salim street"
+  },
+  "why": "English labels"
+ },
+ {
+  "id": "R21",
+  "input": "الموصل الجديدة حي الرسالة 07701234567 عمر",
+  "expected": {
+   "name": "عمر",
+   "governorate": "Nineveh",
+   "address": "~حي الرسالة"
+  },
+  "why": "name after phone"
+ },
+ {
+  "id": "R22",
+  "input": "Hi\nName Ali\nNum 07701234567\nAddress Karbala, Hay al-Abbas",
+  "expected": {
+   "name": "Ali",
+   "governorate": "Karbala",
+   "address": "~Hay al-Abbas"
+  },
+  "why": "English labels without colon"
+ },
+ {
+  "id": "R23",
+  "input": "الاسم :- علي عباس\nالرقم :- 07801234567\nالمحافظة :- نينوى\nاقرب نقطة دالة :- الموصل حي الزهور قرب جامع الزهور",
+  "expected": {
+   "name": "علي عباس",
+   "governorate": "Nineveh",
+   "address": "~قرب جامع الزهور"
+  },
+  "why": "labels with :-"
+ },
+ {
+  "id": "R24",
+  "input": "salam, ana ahmed men baghdad, hay al jihad, raqmi 07901234567",
+  "expected": {
+   "name": "ahmed",
+   "governorate": "Baghdad",
+   "address": "~hay al jihad"
+  },
+  "why": "Arabizi"
+ },
+ {
+  "id": "R25",
+  "input": "المثنى السماوة قرب الجسر\nمثنى عباس 07701112233",
+  "expected": {
+   "name": "مثنى عباس",
+   "governorate": "Muthanna"
+  },
+  "why": "name equal to own governorate"
+ },
+ {
+  "id": "R26",
+  "input": "البصرة او بغداد 07701234567 حسين",
+  "expected": {
+   "governorate": null,
+   "needs_review": true
+  },
+  "why": "two governorates no cue"
+ },
+ {
+  "id": "R27",
+  "input": "السلام عليكم ورحمة الله\nمحمد جاسم / 07712345678 / بغداد / حي العامل / قرب جامع الحسنين",
+  "expected": {
+   "name": "محمد جاسم",
+   "governorate": "Baghdad",
+   "address": "~قرب جامع الحسنين"
+  },
+  "why": "slash separated"
+ },
+ {
+  "id": "R28",
+  "input": "الرقم 07701234567\nالرقم الثاني 07812345678\nالاسم سجاد كريم\nالعنوان النجف الكوفة حي ميثم التمار",
+  "expected": {
+   "phone": "+9647701234567",
+   "alt_phone": "+9647812345678",
+   "governorate": "Najaf",
+   "address": "~الكوفة"
+  },
+  "why": "second number label"
+ },
+ {
+  "id": "R29",
+  "input": "الاسم: علي\nالرقم: +44 7911 123456\nالعنوان: بغداد زيونة",
+  "expected": {
+   "phone": null,
+   "needs_review": true,
+   "governorate": "Baghdad"
+  },
+  "why": "foreign labelled"
+ },
+ {
+  "id": "R30",
+  "input": "ساكن بغداد الكرادة، اسمي علي، 07701234567",
+  "expected": {
+   "name": "علي",
+   "governorate": "Baghdad",
+   "address": "~الكرادة"
+  },
+  "why": "ساكن label"
+ },
+ {
+  "id": "R31",
+  "input": "Ahmed, 07701234567, Basrah, Al Jazair street",
+  "expected": {
+   "name": "Ahmed",
+   "governorate": "Basra",
+   "address": "~Jazair"
+  },
+  "why": "comma separated English"
+ },
+ {
+  "id": "R32",
+  "input": "dhok malta 07501234567 shivan",
+  "expected": {
+   "governorate": "Duhok",
+   "address": "~malta"
+  },
+  "why": "lowercase Kurdish translit"
+ },
+ {
+  "id": "F4a",
+  "input": "محمد جاسم\n07812345678\nالحي الصناعي",
+  "expected": {
+   "governorate": null,
+   "needs_review": true,
+   "address": "~الحي الصناعي"
+  },
+  "why": "الحي = the neighbourhood, not Al-Hay (Wasit)"
+ },
+ {
+  "id": "F4b",
+  "input": "علي 07701234567 الحي العسكري قرب المدرسة",
+  "expected": {
+   "governorate": null,
+   "needs_review": true
+  },
+  "why": "generic الحي"
+ },
+ {
+  "id": "F12a",
+  "input": "عباس 07701234567 النجف الحي الصناعي",
+  "expected": {
+   "governorate": "Najaf",
+   "needs_review": false
+  },
+  "why": "no false conflict from الحي"
+ },
+ {
+  "id": "F12b",
+  "input": "زهراء 07701234567 كربلاء الحي العسكري",
+  "expected": {
+   "governorate": "Karbala",
+   "needs_review": false
+  },
+  "why": "no false conflict from الحي"
+ },
+ {
+  "id": "F4c",
+  "input": "علي 07701234567 النجف حي النصر",
+  "expected": {
+   "governorate": "Najaf",
+   "needs_review": false
+  },
+  "why": "النصر is generic"
+ },
+ {
+  "id": "F13",
+  "input": "علي 07701234567 عندكم توصيل للبصرة؟",
+  "expected": {
+   "governorate": "Basra",
+   "address": null,
+   "needs_review": true
+  },
+  "why": "question chatter is not an address"
+ },
+ {
+  "id": "F21a",
+  "input": "نور 07712345678 البصرة الجبيلة قرب جامع الامام علي",
+  "expected": {
+   "address": "~الامام علي"
+  },
+  "why": "trailing علي not trimmed"
+ },
+ {
+  "id": "F21b",
+  "input": "العنوان: البصرة - الجبيلة - قرب جامع الامام علي\nالاسم: نور\n07712345678",
+  "expected": {
+   "address": "~الامام علي"
+  },
+  "why": "trailing علي not trimmed"
+ },
+ {
+  "id": "F22a",
+  "input": "سلام حسن 07701234567 بغداد المنصور",
+  "expected": {
+   "name": "سلام حسن"
+  },
+  "why": "سلام is a given name"
+ },
+ {
+  "id": "F22b",
+  "input": "الاسم: سلام عبد الله\nالرقم: 07701234567\nبغداد الكرادة",
+  "expected": {
+   "name": "سلام عبد الله"
+  },
+  "why": "labelled سلام"
+ },
+ {
+  "id": "F22c",
+  "input": "هلا محمد 07701234567 بغداد الكرادة",
+  "expected": {
+   "name": "هلا محمد"
+  },
+  "why": "هلا is a given name"
+ },
+ {
+  "id": "F22d",
+  "input": "هلا\nعلي حسين\n07701234567\nبغداد الكرادة",
+  "expected": {
+   "name": "علي حسين"
+  },
+  "why": "هلا alone is a greeting"
+ },
+ {
+  "id": "F23a",
+  "input": "علي 0770123456 4 بغداد مدينة الصدر",
+  "expected": {
+   "needs_review": true
+  },
+  "why": "10 digits + trailing 1-digit group is ambiguous"
+ },
+ {
+  "id": "F23b",
+  "input": "Ali 0771234567 8 Baghdad Mansour",
+  "expected": {
+   "needs_review": true
+  },
+  "why": "ambiguous join"
+ },
+ {
+  "id": "F23c",
+  "input": "علي 0770 123 45 67 بغداد الكرادة",
+  "expected": {
+   "phone": "+9647701234567",
+   "needs_review": false
+  },
+  "why": "4-3-2-2 grouping is normal"
+ },
+ {
+  "id": "F24",
+  "input": "ان شاء الله\nاحمد كاظم\n07701234567\nالبصرة حي الجمعيات",
+  "expected": {
+   "name": "احمد كاظم",
+   "address": "حي الجمعيات"
+  },
+  "why": "religious phrase is not a name"
+ },
+ {
+  "id": "F25a",
+  "input": "رقمي 07712345678 ورقم اخوي 07801234567 النجف حي السعد",
+  "expected": {
+   "name": null,
+   "needs_review": true
+  },
+  "why": "ورقم is not a name"
+ },
+ {
+  "id": "F25b",
+  "input": "علي رقمي 07701234567 والثاني 0780123456 بغداد المنصور",
+  "expected": {
+   "name": "علي",
+   "address": "المنصور"
+  },
+  "why": "والثاني is not a name"
+ },
+ {
+  "id": "F25c",
+  "input": "للزبونة سارة رقمها 07712345678 النجف الكوفة",
+  "expected": {
+   "name": "سارة",
+   "address": "الكوفة"
+  },
+  "why": "helper words are not names"
+ },
+ {
+  "id": "F28a",
+  "input": "علي 07812345678 الكوت حي الجهاد",
+  "expected": {
+   "governorate": "Wasit",
+   "needs_review": false
+  },
+  "why": "tier-3 never conflicts"
+ },
+ {
+  "id": "F28b",
+  "input": "علي 07812345678 النجف حي الجهاد قرب جامع",
+  "expected": {
+   "governorate": "Najaf",
+   "needs_review": false
+  },
+  "why": "tier-3 never conflicts"
+ },
+ {
+  "id": "F8",
+  "input": "علي 07701234567 ميسان العمارة الدورة",
+  "expected": {
+   "governorate": "Maysan",
+   "needs_review": false
+  },
+  "why": "tier-3 never conflicts"
+ },
+ {
+  "id": "F5a",
+  "input": "الاسم: علي البغدادي\nالرقم 07701234567\nالبصرة العشار",
+  "expected": {
+   "name": "علي البغدادي",
+   "governorate": "Basra",
+   "needs_review": false
+  },
+  "why": "surname"
+ },
+ {
+  "id": "F5b",
+  "input": "احمد الرفاعي 07701234567 بغداد الدورة",
+  "expected": {
+   "name": "احمد الرفاعي",
+   "governorate": "Baghdad",
+   "needs_review": false
+  },
+  "why": "surname"
+ },
+ {
+  "id": "F6a",
+  "input": "علي 07701234567 عالبصرة حي الحسين",
+  "expected": {
+   "governorate": "Basra",
+   "address": "حي الحسين"
+  },
+  "why": "عال contraction"
+ },
+ {
+  "id": "F6b",
+  "input": "علي 07701234567 ع البصرة الجمهورية",
+  "expected": {
+   "governorate": "Basra",
+   "address": "الجمهورية"
+  },
+  "why": "ع contraction"
+ },
+ {
+  "id": "F6c",
+  "input": "علي 07701234567 عالكوت حي الجهاد",
+  "expected": {
+   "governorate": "Wasit"
+  },
+  "why": "عال + collision alias"
+ },
+ {
+  "id": "F7a",
+  "input": "علي 07701234567 كربلاء المقدسة حي النقيب قرب كراج النجف",
+  "expected": {
+   "governorate": "Karbala",
+   "address": "حي النقيب قرب كراج النجف"
+  },
+  "why": "honorific"
+ },
+ {
+  "id": "F7b",
+  "input": "Ali 07701234567 najaf al ashraf, hay al ansar",
+  "expected": {
+   "governorate": "Najaf",
+   "address": "hay al ansar"
+  },
+  "why": "honorific"
+ },
+ {
+  "id": "F9",
+  "input": "علي 07701234567 بغداد المنصور تلفون البيت 017181234",
+  "expected": {
+   "phone": "+9647701234567",
+   "needs_review": false,
+   "address": "المنصور"
+  },
+  "why": "landline ignored"
+ },
+ {
+  "id": "F15a",
+  "input": "نسيت الرقم بس هذا رقم اخوي 07701234567 علي حسن كربلاء حي العباس",
+  "expected": {
+   "name": "علي حسن",
+   "address": "حي العباس"
+  },
+  "why": "phone intro not address"
+ },
+ {
+  "id": "F15b",
+  "input": "علي 07701234567 بغداد حي العامل\nاخوي اسمه حيدر هو يستلم",
+  "expected": {
+   "address": "حي العامل"
+  },
+  "why": "recipient note not address"
+ },
+ {
+  "id": "F15c",
+  "input": "Ali 07701234567 Basra, Ashar, near Corniche, please call before coming",
+  "expected": {
+   "address": "Ashar, near Corniche"
+  },
+  "why": "request chatter cut"
+ },
+ {
+  "id": "F26a",
+  "input": "اسم المستلم: علي جبار\nرقم المستلم: 07801234567\nالعنوان: الكوت حي الحسين",
+  "expected": {
+   "name": "علي جبار",
+   "address": "الكوت حي الحسين"
+  },
+  "why": "رقم المستلم label"
+ },
+ {
+  "id": "F26b",
+  "input": "رقم اخوي 07801234567\nاسمي باقر\nكربلاء حي النقيب",
+  "expected": {
+   "name": "باقر",
+   "address": "حي النقيب"
+  },
+  "why": "رقم اخوي label"
+ },
+ {
+  "id": "F14",
+  "input": "محمد 07712345678 بغداد الجادرية والقطعة لون اسود قياس L",
+  "expected": {
+   "address": "الجادرية"
+  },
+  "why": "product words cut from address"
+ },
+ {
+  "id": "F27a",
+  "input": "احمد كاظم 07701234567 البصرة حي الجمعيات الدفع عند الاستلام؟",
+  "expected": {
+   "address": "حي الجمعيات"
+  },
+  "why": "payment chatter cut"
+ },
+ {
+  "id": "F27b",
+  "input": "احمد 07701234567 الكرادة ان شاء الله توصل باجر",
+  "expected": {
+   "address": "الكرادة"
+  },
+  "why": "timing chatter cut"
+ },
+ {
+  "id": "F19a",
+  "input": "رقمي 077o1234567 بغداد",
+  "expected": {
+   "phone": null,
+   "needs_review": true
+  },
+  "why": "letter typo flagged"
+ },
+ {
+  "id": "F19b",
+  "input": "علي 077O1234567 بغداد الكرادة",
+  "expected": {
+   "phone": null,
+   "address": "الكرادة",
+   "needs_review": true
+  },
+  "why": "letter typo flagged, not in address"
+ },
+ {
+  "id": "F29",
+  "input": "محافظة واسط الكوت حي الجهاد قرب مستشفى الزهراء ام علي 07812345678",
+  "expected": {
+   "name": "ام علي",
+   "address": "الكوت حي الجهاد قرب مستشفى الزهراء",
+   "needs_review": false
+  },
+  "why": "kunya after landmark"
+ },
+ {
+  "id": "F29b",
+  "input": "بغداد الشعب قرب بيت ابو علي 07701234567",
+  "expected": {
+   "name": null,
+   "address": "~بيت ابو علي"
+  },
+  "why": "kunya after بيت is a landmark"
+ },
+ {
+  "id": "F30",
+  "input": "dear i want 2 pieces, ali from najaf, kufa street near the hospital 07801234567",
+  "expected": {
+   "name": "ali",
+   "governorate": "Najaf",
+   "address": "kufa street near the hospital"
+  },
+  "why": "X from <city>"
+ },
+ {
+  "id": "F11",
+  "input": "علي 07701234567 صلاح الدين سامراء",
+  "expected": {
+   "governorate": "Saladin",
+   "address": "سامراء"
+  },
+  "why": "person-name governorate not in name position"
+ },
+ {
+  "id": "F31",
+  "input": "xxxxxxxxxx",
+  "expected": {
+   "name": null
+  },
+  "why": "gibberish is not a name"
+ },
+ {
+  "id": "F10",
+  "input": "علي 07701234567 قره قوش",
+  "expected": {
+   "governorate": "Nineveh"
+  },
+  "why": "coverage"
+ },
+ {
+  "id": "F48a",
+  "input": "علي 07701234567 الكوت حي الكفاءات القطعة 7",
+  "expected": {
+   "governorate": "Wasit",
+   "address": "~القطعة 7",
+   "needs_review": false
+  },
+  "why": "plot number is address"
+ },
+ {
+  "id": "F48b",
+  "input": "مريم 07701234567 النجف حي الزهراء قطعة 5 قرب جامع الحسن",
+  "expected": {
+   "address": "~قطعة 5 قرب جامع الحسن"
+  },
+  "why": "plot + landmark kept"
+ },
+ {
+  "id": "F48c",
+  "input": "العنوان: البصرة حي الجزائر قطعة 12 دار 40\nالاسم علي\n07701234567",
+  "expected": {
+   "address": "~قطعة 12 دار 40"
+  },
+  "why": "labelled plot"
+ },
+ {
+  "id": "F41a",
+  "input": "علي 07701234567 البصرة حي الجامعة قطعة 12 دار 5",
+  "expected": {
+   "address": "~قطعة 12 دار 5"
+  },
+  "why": "plot + house"
+ },
+ {
+  "id": "F41b",
+  "input": "زهراء 07801234567 النجف حي الامير قرب مكتبة الف باء",
+  "expected": {
+   "address": "~مكتبة الف باء"
+  },
+  "why": "الف in a landmark name"
+ },
+ {
+  "id": "F41c",
+  "input": "حسين 07701234567 بغداد شارع المطار قرب معرض ابو طلب",
+  "expected": {
+   "address": "~معرض ابو طلب"
+  },
+  "why": "طلب in a landmark name"
+ },
+ {
+  "id": "F41d",
+  "input": "علي 07701234567 بغداد الدورة قرب مدرسة اليوم الموعود",
+  "expected": {
+   "address": "~مدرسة اليوم الموعود"
+  },
+  "why": "اليوم in a landmark name"
+ },
+ {
+  "id": "F41e",
+  "input": "علي 07701234567 الحلة حي بابل قرب صيدلية رجاء",
+  "expected": {
+   "address": "~صيدلية رجاء"
+  },
+  "why": "رجاء in a landmark name"
+ },
+ {
+  "id": "F49a",
+  "input": "علي 07701234567 البصرة الطويسة قرب مطعم اليوم",
+  "expected": {
+   "address": "~مطعم اليوم"
+  },
+  "why": "landmark name not trimmed"
+ },
+ {
+  "id": "F49b",
+  "input": "علي 07701234567 البصرة ابو الخصيب قرب المدرسة لون البيت ابيض",
+  "expected": {
+   "address": "~لون البيت ابيض"
+  },
+  "why": "house colour hint kept"
+ },
+ {
+  "id": "F40a",
+  "input": "Sara 07501234567 Erbil Ankawa, 2nd street, the building before Family Mall",
+  "expected": {
+   "address": "~before Family Mall"
+  },
+  "why": "before in English address"
+ },
+ {
+  "id": "F40b",
+  "input": "Ali 07701234567 Baghdad Mansour, second street before the bridge",
+  "expected": {
+   "address": "~second street before the bridge"
+  },
+  "why": "before/second"
+ },
+ {
+  "id": "F40c",
+  "input": "Noor 07701234567 Baghdad Karrada, near Model school",
+  "expected": {
+   "address": "~near Model school"
+  },
+  "why": "model in landmark"
+ },
+ {
+  "id": "F40d",
+  "input": "Ali 07701234567 Basra, Ashar, the house is the one when you enter the alley on the left",
+  "expected": {
+   "address": "~when you enter the alley"
+  },
+  "why": "when in directions"
+ },
+ {
+  "id": "F36a",
+  "input": "بغداد الكرادة قرب جامع الرحمن، حيدر علي، 07701234567",
+  "expected": {
+   "name": "حيدر علي",
+   "address": "الكرادة قرب جامع الرحمن",
+   "needs_review": false
+  },
+  "why": "address, name, phone"
+ },
+ {
+  "id": "F36b",
+  "input": "بغداد الكرادة قرب جامع الرحمن - حيدر علي - 07701234567",
+  "expected": {
+   "name": "حيدر علي",
+   "address": "الكرادة قرب جامع الرحمن"
+  },
+  "why": "dash separated"
+ },
+ {
+  "id": "F36c",
+  "input": "الجمهورية قرب الجامع، حيدر علي، 07701234567، البصرة",
+  "expected": {
+   "name": "حيدر علي",
+   "governorate": "Basra"
+  },
+  "why": "name before phone across comma"
+ },
+ {
+  "id": "F32a",
+  "input": "علي 07701234567 بغداد المنصور\nعفوا الرقم غلط الصحيح 07801234567",
+  "expected": {
+   "phone": "+9647801234567",
+   "alt_phone": null,
+   "address": "المنصور"
+  },
+  "why": "correction"
+ },
+ {
+  "id": "F32b",
+  "input": "الاسم علي\nالرقم 07701234567 لا اقصد 07701234568\nبغداد الكرادة",
+  "expected": {
+   "phone": "+9647701234568",
+   "alt_phone": null,
+   "address": "الكرادة"
+  },
+  "why": "correction اقصد"
+ },
+ {
+  "id": "F32c",
+  "input": "اسمي علي رقمي 07701234567 بالخطأ كتبته الرقم الصح 07801234567 بغداد الكرادة",
+  "expected": {
+   "phone": "+9647801234567",
+   "address": "الكرادة"
+  },
+  "why": "correction بالخطأ/الصح"
+ },
+ {
+  "id": "F34a",
+  "input": "رقم ثاني 07801234567\nالرقم 07712345678\nمحمد علي البصرة الجزائر",
+  "expected": {
+   "phone": "+9647712345678",
+   "alt_phone": "+9647801234567"
+  },
+  "why": "labelled second number ranks below"
+ },
+ {
+  "id": "F34b",
+  "input": "رقم البيت 07801234567 رقمي 07712345678 علي بغداد الكرادة",
+  "expected": {
+   "phone": "+9647712345678",
+   "alt_phone": "+9647801234567",
+   "address": "الكرادة"
+  },
+  "why": "house number ranks below رقمي"
+ },
+ {
+  "id": "F34c",
+  "input": "07712345678 هذا رقم اخوي وهذا رقمي 07801234567",
+  "expected": {
+   "phone": "+9647801234567",
+   "alt_phone": "+9647712345678",
+   "address": null
+  },
+  "why": "brother's number"
+ },
+ {
+  "id": "F45a",
+  "input": "الاسم سارة\nرقم الهاتف +964 780 123 4567 والبديل 07712345678\nاربيل عنكاوا",
+  "expected": {
+   "phone": "+9647801234567",
+   "alt_phone": "+9647712345678",
+   "address": "عنكاوا"
+  },
+  "why": "بديل label"
+ },
+ {
+  "id": "F45b",
+  "input": "علي 07701234567 بديل 07801234567 بغداد الكرادة",
+  "expected": {
+   "alt_phone": "+9647801234567",
+   "address": "الكرادة"
+  },
+  "why": "بديل label"
+ },
+ {
+  "id": "F45c",
+  "input": "Ali 07701234567 alternative 07801234567 Baghdad Karrada",
+  "expected": {
+   "alt_phone": "+9647801234567",
+   "address": "Karrada"
+  },
+  "why": "alternative label"
+ },
+ {
+  "id": "F46a",
+  "input": "علي 0770123456 4 بغداد مدينة الصدر",
+  "expected": {
+   "phone": null,
+   "needs_review": true
+  },
+  "why": "ambiguous join -> no phone"
+ },
+ {
+  "id": "F46b",
+  "input": "Ali 44 7700 900123 Baghdad Mansour",
+  "expected": {
+   "phone": null,
+   "needs_review": true
+  },
+  "why": "ambiguous prefix -> no phone"
+ },
+ {
+  "id": "F50a",
+  "input": "لو سمحت الاسم سارة\n07701234567\nبغداد حي العدل",
+  "expected": {
+   "name": "سارة",
+   "address": "حي العدل"
+  },
+  "why": "لو سمحت"
+ },
+ {
+  "id": "F50b",
+  "input": "لو سمحت وصلوه باجر الصبح\nالاسم حيدر\n0770 1234 567\nميسان العمارة حي الحسين",
+  "expected": {
+   "name": "حيدر",
+   "address": "العمارة حي الحسين"
+  },
+  "why": "لو سمحت + timing"
+ },
+ {
+  "id": "F37",
+  "input": "انا بالحلة بس ابعثوه للناصرية حي اريدو\nعلي حسن 07701234567",
+  "expected": {
+   "governorate": "Dhi Qar",
+   "address": "حي اريدو"
+  },
+  "why": "delivery side only"
+ },
+ {
+  "id": "F38a",
+  "input": "علي 07701234567 ساكن بالقائم حي الجمعية",
+  "expected": {
+   "governorate": "Anbar"
+  },
+  "why": "القائم gated"
+ },
+ {
+  "id": "F38b",
+  "input": "Ahmed 0770.123.4567 madinat al sadr",
+  "expected": {
+   "governorate": "Baghdad"
+  },
+  "why": "Arabizi Sadr City"
+ },
+ {
+  "id": "F39",
+  "input": "علي 07701234567 البصرة حي الحسين ارضي 040 123456",
+  "expected": {
+   "address": "حي الحسين",
+   "needs_review": false
+  },
+  "why": "landline cue word"
+ },
+ {
+  "id": "F44",
+  "input": "Order for Zainab, 07712345678, Baghdad Dora, Mechanic street",
+  "expected": {
+   "name": "Zainab",
+   "governorate": "Baghdad"
+  },
+  "why": "order for <name>"
+ },
+ {
+  "id": "F47a",
+  "input": "علي 07701234567 بغداد الكرادة قرب جامع الرحمن 2 قطعة",
+  "expected": {
+   "address": "الكرادة قرب جامع الرحمن"
+  },
+  "why": "quantity + product cut"
+ },
+ {
+  "id": "F47b",
+  "input": "علي 07701234567 بغداد الكرادة قرب جامع الرحمن الصبح احسن",
+  "expected": {
+   "address": "الكرادة قرب جامع الرحمن"
+  },
+  "why": "timing chatter cut"
+ }
+]
