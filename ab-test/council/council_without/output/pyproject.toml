@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dallal_parser"
+version = "1.0.0"
+description = "Extract delivery details (name, phone, governorate, address) from Iraqi Instagram DM orders."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.scripts]
+dallal-parse = "dallal_parser.__main__:main"
+
+[tool.setuptools]
+packages = ["dallal_parser"]

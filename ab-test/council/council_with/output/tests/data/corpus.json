@@ -1,0 +1,926 @@
+{
+ "description": "Realistic Iraqi COD DMs used for development (not a holdout).",
+ "cases": [
+  {
+   "id": "C01",
+   "lang": "ar",
+   "input": "علي حسين\nبغداد الكرادة قرب جامع براثا\n07801234567",
+   "expect": {
+    "name": "علي حسين",
+    "phone": "+9647801234567",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "الكرادة"
+    ]
+   },
+   "shuffle_safe": true,
+   "note": "classic 3 lines"
+  },
+  {
+   "id": "C02",
+   "lang": "ar",
+   "input": "07801234567\nبغداد الكرادة قرب جامع براثا\nعلي حسين",
+   "expect": {
+    "name": "علي حسين",
+    "phone": "+9647801234567",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "الكرادة"
+    ]
+   },
+   "shuffle_safe": true,
+   "note": "reverse order"
+  },
+  {
+   "id": "C03",
+   "lang": "ar",
+   "input": "هلا اخي 🌹\nمصطفى عباس ناصر\nالبصرة حي الحسين قرب سوق الحسين\n٠٧٧١٢٣٤٥٦٧٨\nشكرا",
+   "expect": {
+    "name": "مصطفى عباس ناصر",
+    "phone": "+9647712345678",
+    "governorate": "Basra",
+    "address_contains": [
+     "حي الحسين"
+    ]
+   },
+   "shuffle_safe": true,
+   "note": "greeting + thanks + Arabic digits"
+  },
+  {
+   "id": "C04",
+   "lang": "ar",
+   "input": "السلام عليكم\nاريد التيشيرت الابيض قياس M\nزهراء كريم\nالنجف حي الامير\n0780 123 4567",
+   "expect": {
+    "name": "زهراء كريم",
+    "phone": "+9647801234567",
+    "governorate": "Najaf",
+    "address_contains": [
+     "حي الامير"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "product line first"
+  },
+  {
+   "id": "C05",
+   "lang": "ar",
+   "input": "الاسم: حيدر علي\nرقم الهاتف: 07501234567\nالمحافظة: اربيل\nالعنوان: عنكاوة قرب الكنيسة",
+   "expect": {
+    "name": "حيدر علي",
+    "phone": "+9647501234567",
+    "governorate": "Erbil",
+    "address_contains": [
+     "عنكاوة"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "labelled"
+  },
+  {
+   "id": "C06",
+   "lang": "ar",
+   "input": "الاسم الثلاثي:محمد قاسم جبار\nالرقم:07901234567\nالمحافظة:ذي قار\nالمنطقة:الشطرة\nاقرب نقطة دالة:مستشفى الشطرة",
+   "expect": {
+    "name": "محمد قاسم جبار",
+    "phone": "+9647901234567",
+    "governorate": "Dhi Qar",
+    "address_contains": [
+     "الشطرة",
+     "مستشفى الشطرة"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "labels without spaces"
+  },
+  {
+   "id": "C07",
+   "lang": "en",
+   "input": "name: Sara Ahmed\nphone: +964 770 123 4567\ncity: Basra\naddress: Al-Jazair street near Basra mall",
+   "expect": {
+    "name": "Sara Ahmed",
+    "phone": "+9647701234567",
+    "governorate": "Basra",
+    "address_contains": [
+     "Al-Jazair"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "English labels"
+  },
+  {
+   "id": "C08",
+   "lang": "en",
+   "input": "Hi! Ahmed Kareem here\n0750-123-4567\nErbil, 100m street near Family Mall",
+   "expect": {
+    "phone": "+9647501234567",
+    "governorate": "Erbil",
+    "address_contains": [
+     "100m"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "English free text, name in a phrase"
+  },
+  {
+   "id": "C09",
+   "lang": "arabizi",
+   "input": "3li kareem\nbasra / al jazair qurb al jami3\n07712345678",
+   "expect": {
+    "name": "3li kareem",
+    "phone": "+9647712345678",
+    "governorate": "Basra",
+    "address_contains": [
+     "al jazair"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C10",
+   "lang": "arabizi",
+   "input": "ana zainab ali, baghdad zayona, 0770 123 4567",
+   "expect": {
+    "name": "zainab ali",
+    "phone": "+9647701234567",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "zayona"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "ana intro"
+  },
+  {
+   "id": "C11",
+   "lang": "ar",
+   "input": "ام علي، الحلة حي بابل، ٠٧٨٠١٢٣٤٥٦٧",
+   "expect": {
+    "name": "ام علي",
+    "phone": "+9647801234567",
+    "governorate": "Babil",
+    "address_contains": [
+     "حي بابل"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "kunya + commas"
+  },
+  {
+   "id": "C12",
+   "lang": "ar",
+   "input": "ابو حسين\nالكوت حي الجهاد\n07701234567",
+   "expect": {
+    "name": "ابو حسين",
+    "phone": "+9647701234567",
+    "governorate": "Wasit",
+    "address_contains": [
+     "حي الجهاد"
+    ]
+   },
+   "shuffle_safe": true,
+   "note": ""
+  },
+  {
+   "id": "C13",
+   "lang": "ar",
+   "input": "كرار علي\nببغداد الشعلة قرب الجامع\n07701234567",
+   "expect": {
+    "name": "كرار علي",
+    "phone": "+9647701234567",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "الشعلة"
+    ]
+   },
+   "shuffle_safe": true,
+   "note": "proclitic ب"
+  },
+  {
+   "id": "C14",
+   "lang": "ar",
+   "input": "نور الهدى\nالديوانية حي العسكري قرب مدرسة\n07801234567",
+   "expect": {
+    "name": "نور الهدى",
+    "phone": "+9647801234567",
+    "governorate": "Qadisiyah",
+    "address_contains": [
+     "حي العسكري"
+    ]
+   },
+   "shuffle_safe": true,
+   "note": ""
+  },
+  {
+   "id": "C15",
+   "lang": "ar",
+   "input": "فاطمة جواد\nالعمارة حي الحسين\n07901234567",
+   "expect": {
+    "name": "فاطمة جواد",
+    "phone": "+9647901234567",
+    "governorate": "Maysan",
+    "address_contains": [
+     "حي الحسين"
+    ]
+   },
+   "shuffle_safe": true,
+   "note": ""
+  },
+  {
+   "id": "C16",
+   "lang": "ar",
+   "input": "ياسر طه\nالسماوة قرب الجسر\n07501234567",
+   "expect": {
+    "name": "ياسر طه",
+    "phone": "+9647501234567",
+    "governorate": "Muthanna",
+    "address_contains": [
+     "قرب الجسر"
+    ]
+   },
+   "shuffle_safe": true,
+   "note": ""
+  },
+  {
+   "id": "C17",
+   "lang": "ar",
+   "input": "رسل حسن\nبعقوبة حي المعلمين\n07701234567",
+   "expect": {
+    "name": "رسل حسن",
+    "phone": "+9647701234567",
+    "governorate": "Diyala",
+    "address_contains": [
+     "حي المعلمين"
+    ]
+   },
+   "shuffle_safe": true,
+   "note": ""
+  },
+  {
+   "id": "C18",
+   "lang": "ar",
+   "input": "عمر خالد\nالفلوجة حي الجولان\n07801234567",
+   "expect": {
+    "name": "عمر خالد",
+    "phone": "+9647801234567",
+    "governorate": "Anbar",
+    "address_contains": [
+     "حي الجولان"
+    ]
+   },
+   "shuffle_safe": true,
+   "note": ""
+  },
+  {
+   "id": "C19",
+   "lang": "ar",
+   "input": "مريم سعد\nتكريت حي القادسية\n07901234567",
+   "expect": {
+    "name": "مريم سعد",
+    "phone": "+9647901234567",
+    "governorate": "Saladin",
+    "address_contains": [
+     "حي القادسية"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "حي القادسية is a district name, Tikrit wins"
+  },
+  {
+   "id": "C20",
+   "lang": "ku",
+   "input": "هيمن عمر\nسلێمانی سەرچنار\n۰۷۵۰۱۲۳۴۵۶۷",
+   "expect": {
+    "name": "هيمن عمر",
+    "phone": "+9647501234567",
+    "governorate": "Sulaymaniyah",
+    "address_contains": [
+     "سەرچنار"
+    ]
+   },
+   "shuffle_safe": true,
+   "note": ""
+  },
+  {
+   "id": "C21",
+   "lang": "ku",
+   "input": "ئاری\nدهۆک مالتا\n0750 123 4567",
+   "expect": {
+    "name": "ئاری",
+    "phone": "+9647501234567",
+    "governorate": "Duhok",
+    "address_contains": [
+     "مالتا"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C22",
+   "lang": "ar",
+   "input": "ريبوار\nزاخو قرب الجسر\n07501234567",
+   "expect": {
+    "name": "ريبوار",
+    "phone": "+9647501234567",
+    "governorate": "Duhok",
+    "address_contains": [
+     "قرب الجسر"
+    ]
+   },
+   "shuffle_safe": true,
+   "note": ""
+  },
+  {
+   "id": "C23",
+   "lang": "ar",
+   "input": "سوزان احمد\nكركوك حي الواسطي\n07701234567",
+   "expect": {
+    "name": "سوزان احمد",
+    "phone": "+9647701234567",
+    "governorate": "Kirkuk",
+    "address_contains": [
+     "حي الواسطي"
+    ]
+   },
+   "shuffle_safe": true,
+   "note": ""
+  },
+  {
+   "id": "C24",
+   "lang": "ar",
+   "input": "هاوكار\nحلبجة\n07501234567",
+   "expect": {
+    "name": "هاوكار",
+    "phone": "+9647501234567",
+    "governorate": "Halabja"
+   },
+   "shuffle_safe": true,
+   "note": "address missing"
+  },
+  {
+   "id": "C25",
+   "lang": "ar",
+   "input": "علي\nالزبير حي الشعب\n07712345678",
+   "expect": {
+    "name": "علي",
+    "phone": "+9647712345678",
+    "governorate": "Basra",
+    "address_contains": [
+     "الزبير"
+    ],
+    "warnings": [
+     "name_single_word"
+    ]
+   },
+   "shuffle_safe": true,
+   "note": "qadha kept in address"
+  },
+  {
+   "id": "C26",
+   "lang": "ar",
+   "input": "حسين علي\nالموصل الزهور قرب الجامعة\n07701234567",
+   "expect": {
+    "name": "حسين علي",
+    "phone": "+9647701234567",
+    "governorate": "Nineveh",
+    "address_contains": [
+     "الزهور"
+    ]
+   },
+   "shuffle_safe": true,
+   "note": ""
+  },
+  {
+   "id": "C27",
+   "lang": "ar",
+   "input": "محمد\nالمنصور قرب الجامع\n07701234567",
+   "expect": {
+    "name": "محمد",
+    "phone": "+9647701234567",
+    "governorate": null,
+    "warnings": [
+     "name_single_word"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "المنصور is ambiguous (Baghdad/Mosul): no governorate"
+  },
+  {
+   "id": "C28",
+   "lang": "ar",
+   "input": "علي حسين البصري\nبغداد زيونة\n07701234567",
+   "expect": {
+    "name": "علي حسين البصري",
+    "phone": "+9647701234567",
+    "governorate": "Baghdad",
+    "no_warnings": [
+     "multiple_governorates"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "nisba"
+  },
+  {
+   "id": "C29",
+   "lang": "ar",
+   "input": "حسن الموصلي\nكربلاء حي الحسين\n07801234567",
+   "expect": {
+    "name": "حسن الموصلي",
+    "phone": "+9647801234567",
+    "governorate": "Karbala"
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C30",
+   "lang": "ar",
+   "input": "زينب كاظم\nبغداد الكرادة قرب كراج النجف\n07712345678",
+   "expect": {
+    "name": "زينب كاظم",
+    "phone": "+9647712345678",
+    "governorate": "Baghdad",
+    "no_warnings": [
+     "multiple_governorates"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "reference"
+  },
+  {
+   "id": "C31",
+   "lang": "ar",
+   "input": "سجاد\nبغداد\nالنجف حي الامير\n07701234567",
+   "expect": {
+    "phone": "+9647701234567",
+    "governorate": "Baghdad",
+    "warnings": [
+     "multiple_governorates"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "conflict"
+  },
+  {
+   "id": "C32",
+   "lang": "ar",
+   "input": "المحافظة: كربلاء\nالعنوان: النجف شارع الكوفة",
+   "expect": {
+    "name": null,
+    "phone": null,
+    "governorate": "Karbala",
+    "warnings": [
+     "multiple_governorates"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C33",
+   "lang": "ar",
+   "input": "احمد\nبغداد\n07701234567",
+   "expect": {
+    "name": "احمد",
+    "phone": "+9647701234567",
+    "governorate": "Baghdad"
+   },
+   "shuffle_safe": false,
+   "note": "address missing"
+  },
+  {
+   "id": "C34",
+   "lang": "ar",
+   "input": "علي\nبغداد الكرادة",
+   "expect": {
+    "name": "علي",
+    "phone": null,
+    "governorate": "Baghdad"
+   },
+   "shuffle_safe": false,
+   "note": "no phone"
+  },
+  {
+   "id": "C35",
+   "lang": "ar",
+   "input": "علي حسين\nبغداد زيونة\n0770123456",
+   "expect": {
+    "name": "علي حسين",
+    "phone": null,
+    "governorate": "Baghdad",
+    "warnings": [
+     "invalid_phone"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "10 digits"
+  },
+  {
+   "id": "C36",
+   "lang": "ar",
+   "input": "علي حسين\nبغداد زيونة\n077012345678",
+   "expect": {
+    "name": "علي حسين",
+    "phone": null,
+    "governorate": "Baghdad",
+    "warnings": [
+     "invalid_phone"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "12 digits"
+  },
+  {
+   "id": "C37",
+   "lang": "ar",
+   "input": "علي حسين\nبغداد زيونة\n+971501234567",
+   "expect": {
+    "name": "علي حسين",
+    "phone": null,
+    "governorate": "Baghdad",
+    "warnings": [
+     "invalid_phone"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "foreign"
+  },
+  {
+   "id": "C38",
+   "lang": "ar",
+   "input": "زينب\n07701234567 او 07801234567\nكربلاء حي الحسين",
+   "expect": {
+    "name": "زينب",
+    "phone": "+9647701234567",
+    "governorate": "Karbala",
+    "warnings": [
+     "multiple_phones"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C39",
+   "lang": "ar",
+   "input": "رقمي 07701234567 واذا مغلق 0780 123 4567\nحسين\nالنجف",
+   "expect": {
+    "phone": "+9647701234567",
+    "governorate": "Najaf",
+    "warnings": [
+     "multiple_phones"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C40",
+   "lang": "ar",
+   "input": "الاسم: ام علي\nرقم ثاني: 07701234567\nالرقم: 07901234567\nالمحافظة: ميسان",
+   "expect": {
+    "name": "ام علي",
+    "phone": "+9647901234567",
+    "governorate": "Maysan"
+   },
+   "shuffle_safe": false,
+   "note": "labelled secondary first"
+  },
+  {
+   "id": "C41",
+   "lang": "ar",
+   "input": "سارة\nبغداد الدورة محلة 822 زقاق 14 دار 9\n07701234567",
+   "expect": {
+    "name": "سارة",
+    "phone": "+9647701234567",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "محلة 822 زقاق 14 دار 9"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C42",
+   "lang": "ar",
+   "input": "علي بغداد الكرادة 0770 123 4567",
+   "expect": {
+    "name": "علي",
+    "phone": "+9647701234567",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "الكرادة"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "single line"
+  },
+  {
+   "id": "C43",
+   "lang": "ar",
+   "input": "محمد علي حسين النجف حي السعد قرب جامع 07801234567",
+   "expect": {
+    "name": "محمد علي حسين",
+    "phone": "+9647801234567",
+    "governorate": "Najaf",
+    "address_contains": [
+     "حي السعد"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "single line long"
+  },
+  {
+   "id": "C44",
+   "lang": "ar",
+   "input": "مثنى حسين\nالكرادة قرب ساحة الحرية\n07701234567",
+   "expect": {
+    "name": "مثنى حسين",
+    "phone": "+9647701234567",
+    "governorate": "Baghdad",
+    "warnings": [
+     "governorate_inferred"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "name collision"
+  },
+  {
+   "id": "C45",
+   "lang": "ar",
+   "input": "ميسان علي\nبغداد المنصور\n07801234567",
+   "expect": {
+    "name": "ميسان علي",
+    "phone": "+9647801234567",
+    "governorate": "Baghdad"
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C46",
+   "lang": "ar",
+   "input": "حسين عبد الخضر\nبغداد الشعلة\n07701234567",
+   "expect": {
+    "name": "حسين عبد الخضر",
+    "phone": "+9647701234567",
+    "governorate": "Baghdad",
+    "no_warnings": [
+     "multiple_governorates"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C47",
+   "lang": "ar",
+   "input": "صباح الخير\nعلي حسين\nبغداد زيونة\n07701234567",
+   "expect": {
+    "name": "علي حسين",
+    "phone": "+9647701234567",
+    "governorate": "Baghdad"
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C48",
+   "lang": "ar",
+   "input": "تمام\nعلي حسين\nبغداد زيونة\n07701234567",
+   "expect": {
+    "name": "علي حسين",
+    "phone": "+9647701234567",
+    "governorate": "Baghdad"
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C49",
+   "lang": "ar",
+   "input": "هلا محمد كاظم\nبغداد زيونة\n07701234567",
+   "expect": {
+    "name": "هلا محمد كاظم",
+    "phone": "+9647701234567",
+    "governorate": "Baghdad"
+   },
+   "shuffle_safe": false,
+   "note": "Hala is a name here"
+  },
+  {
+   "id": "C50",
+   "lang": "ar",
+   "input": "اريد الكوت الاسود قياس XL\nزينب علي\nبغداد زيونة\n07701234567",
+   "expect": {
+    "name": "زينب علي",
+    "phone": "+9647701234567",
+    "governorate": "Baghdad"
+   },
+   "shuffle_safe": false,
+   "note": "coat"
+  },
+  {
+   "id": "C51",
+   "lang": "ar",
+   "input": "اريد الجاكيت الرمادي\nزينب علي\nحي الجامعة قرب الجامع\n07701234567",
+   "expect": {
+    "name": "زينب علي",
+    "phone": "+9647701234567",
+    "governorate": null
+   },
+   "shuffle_safe": false,
+   "note": "grey"
+  },
+  {
+   "id": "C52",
+   "lang": "ar",
+   "input": "سارة احمد\nبغداد المنصور عمارة 5 الطابق الثاني\n07901234567",
+   "expect": {
+    "name": "سارة احمد",
+    "phone": "+9647901234567",
+    "governorate": "Baghdad"
+   },
+   "shuffle_safe": false,
+   "note": "عمارة = building"
+  },
+  {
+   "id": "C53",
+   "lang": "ar",
+   "input": "بغـــداد\nعلـي\n‏0770 123 4567‏",
+   "expect": {
+    "phone": "+9647701234567",
+    "governorate": "Baghdad"
+   },
+   "shuffle_safe": false,
+   "note": "tatweel + RLM"
+  },
+  {
+   "id": "C54",
+   "lang": "ar",
+   "input": "الاسم:\nعلي حسين\nالرقم:\n07801234567\nالمحافظة:\nالنجف\nاقرب نقطة دالة: مستشفى الصدر",
+   "expect": {
+    "name": "علي حسين",
+    "phone": "+9647801234567",
+    "governorate": "Najaf",
+    "address_contains": [
+     "مستشفى الصدر"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C55",
+   "lang": "ar",
+   "input": "المحافظة والمنطقة: البصرة الجزائر\nالاسم: نور علي\nالرقم: 07712345678",
+   "expect": {
+    "name": "نور علي",
+    "phone": "+9647712345678",
+    "governorate": "Basra",
+    "address_contains": [
+     "الجزائر"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C56",
+   "lang": "ar",
+   "input": "😍😍\nحبيبتي اريد اطلب\nرنا خالد\nاربيل شارع 60 قرب برج اربيل\n07501234567",
+   "expect": {
+    "name": "رنا خالد",
+    "phone": "+9647501234567",
+    "governorate": "Erbil",
+    "address_contains": [
+     "شارع 60"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C57",
+   "lang": "ar",
+   "input": "مرحبا\nالكرادة داخل قرب ساحة الحرية\n07701234567",
+   "expect": {
+    "name": null,
+    "phone": "+9647701234567",
+    "governorate": "Baghdad",
+    "warnings": [
+     "governorate_inferred"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C58",
+   "lang": "ar",
+   "input": "حسن علي\nحي الجمهورية قرب الجامع\n07712345678",
+   "expect": {
+    "name": "حسن علي",
+    "phone": "+9647712345678",
+    "governorate": null
+   },
+   "shuffle_safe": false,
+   "note": "generic district: no guess"
+  },
+  {
+   "id": "C59",
+   "lang": "ar",
+   "input": "🌹🌹🙏",
+   "expect": {
+    "name": null,
+    "phone": null,
+    "governorate": null
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C60",
+   "lang": "ar",
+   "input": "شكرا حبيبتي",
+   "expect": {
+    "name": null,
+    "phone": null,
+    "governorate": null
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C61",
+   "lang": "ar",
+   "input": "اني اسمي علي جاسم ساكن بالحلة حي نادر 07801234567",
+   "expect": {
+    "name": "علي جاسم",
+    "phone": "+9647801234567",
+    "governorate": "Babil",
+    "address_contains": [
+     "حي نادر"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "intro + ساكن + بال"
+  },
+  {
+   "id": "C62",
+   "lang": "en",
+   "input": "my name is Lana Aziz\nankawa near the church\n0750 123 4567",
+   "expect": {
+    "name": "Lana Aziz",
+    "phone": "+9647501234567",
+    "governorate": "Erbil",
+    "address_contains": [
+     "ankawa"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": "city alias only"
+  },
+  {
+   "id": "C63",
+   "lang": "ar",
+   "input": "حيدر\nالناصرية سوق الشيوخ\n07801234567",
+   "expect": {
+    "name": "حيدر",
+    "phone": "+9647801234567",
+    "governorate": "Dhi Qar",
+    "address_contains": [
+     "سوق الشيوخ"
+    ]
+   },
+   "shuffle_safe": false,
+   "note": ""
+  },
+  {
+   "id": "C64",
+   "lang": "ar",
+   "input": "علي\nبغداد\n0770 123 4567 8",
+   "expect": {
+    "name": "علي",
+    "phone": null,
+    "governorate": "Baghdad"
+   },
+   "shuffle_safe": false,
+   "note": "ambiguous grouping"
+  },
+  {
+   "id": "C65",
+   "lang": "ar",
+   "input": "عدد 2 قطعة\nعلي حسين\nالبصرة حي الجزائر\n07712345678",
+   "expect": {
+    "name": "علي حسين",
+    "phone": "+9647712345678",
+    "governorate": "Basra"
+   },
+   "shuffle_safe": false,
+   "note": ""
+  }
+ ]
+}

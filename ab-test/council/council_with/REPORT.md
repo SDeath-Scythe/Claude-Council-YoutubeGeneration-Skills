@@ -1,0 +1,100 @@
+# Council report
+
+**Goal:** Build the order-details parser for Dallal, an Instagram DM sales assistant for Iraqi cash-on-delivery shops: Python package dallal_parser with parse_order(text) -> dict (name, phone +9647XXXXXXXXX, governorate English name, address, plus whatever else is needed), handling Iraqi Arabic, English and mixed messages, with tests, output in ./output
+
+## Process
+- seats: skeptic, user, builder, domain, quality
+- rounds: debate 2, debate 3
+- review passes: 2
+
+## Findings
+- F1 [blocker] fixed: Labelled name value swallows place/address text and returns it as a high-confidence name; governorate is lost — _split_place_off splits labelled/intro name values at the first real place; rest re-classified. AT27 test_labelled_or_intro_name_never_swallows_the_place; suite 80/80
+- F21 [blocker] fixed: Labelled name that fails the name-shape check comes back as the label word itself ('الاسم الثلاثي', 'Name'), with high or medium confidence and no follow-up — rejected label values marked no_name (never a name); label words excluded from names; harakat allowed in name tokens; AT27
+- F23 [blocker] fixed: English place-then-noun landmarks ('Babil hotel', 'Basra street', 'Najaf restaurant') count as the customer's governorate: confidently wrong governorate — REFERENCE_WORDS_AFTER (hotel/street/mall…) make the place a reference; now Babil low + governorate_inferred + needs_followup; AT27
+- F53 [blocker] fixed: Greeting/chatter/product line that is the only name candidate becomes a confident name and the order is confirmed (needs_followup=False) — structural: unlabelled names need positive evidence (names.py, ~450 common Iraqi given names); otherwise low + name_unverified; lexicon extended. 0/34 reviewer chatter lines now confirmed; 0/129 real corpus/holdout names downgraded. AT29
+- F8 [blocker] fixed: Self-intro words (انا/اني/ana/im/I'm) bind as a name label to any letters-only text, so ordinary dialect sentences become the confident name and the real name goes to notes — intro words are a separate weak 'intro' label producing a name candidate only; chatter words (مستعجل, busy) in NOT_NAME_WORDS; AT27
+- F10 [major] fixed: Bare 'مدينة'/'المدينة'/'city:' governorate label turns a Baghdad district into source=label/high confidence and deletes the district from the address — 'city' labels bind only with an explicit ':'; bare مدينة removed; العامرية removed from Tier C; AT27
+- F11 [major] fixed: Product words inside place names hijack the whole address line: 'ابي' (أبي الخصيب, a major Basra district) and 'القياس' send the address to notes — tokens inside a place mention are not product words; ابي الخصيب/أبي الخصيب added to Basra; AT27
+- F15 [major] fixed: Delivery-instruction words become part of the name at high confidence — NOT_NAME_WORDS (send/deliver/to/my/sister, دزوه/لاختي…); line is not a name candidate -> name None + needs_followup; AT27
+- F16 [major] fixed: Test invariants cannot catch place/instruction words in the name (why the blocker slipped through) — invariant now includes Tier A/B aliases (except name collisions), NAME_TRAILERS, NOT_NAME_WORDS; fuzz 500+1000 still green
+- F2 [major] fixed: Intro markers ('اسمي', 'انا', 'I'm', 'my name is') followed by 'من/from + place' put the place in the name; governorate dropped or the record shipped as confident — same split + 'from/من' trimmed; AT27
+- F22 [major] fixed: Names written with harakat or shadda are rejected (e.g. 'محمّد', 'فاطِمة'), so the real name is lost — _NAME_TOKEN_BAD allows U+064B-065F/0670 marks; AT27
+- F24 [major] fixed: A chatter line that is the only name candidate becomes the name at HIGH confidence with no follow-up — chatter phrases added to noise / NOT_NAME_WORDS; AT27
+- F25 [major] fixed: A phone correction in a later message is ignored: the cancelled number stays primary at high confidence with needs_followup=False — 'corrected' phone label kind (الصحيح/correct/الجديد) beats other labels; AT27
+- F29 [major] fixed: Arabic one-line orders that mention the purchase lose name and address entirely (English equivalent works) — product segments split at a following name/intro label (_detail_start); AT27
+- F30 [major] fixed: Thanks words with the و- prefix become, or stick to, the name — noise matching strips one proclitic (_noise_fold); AT27
+- F31 [major] fixed: An unlabelled single non-name word is accepted as the name and the order is confirmed with no follow-up — time/chatter words in NOT_NAME_WORDS; AT27
+- F32 [major] fixed: Public normalize_phone() builds a number from a 10-digit typo plus a stray digit, which parse_order rejects — normalize_phone now uses extract_from_line grouping rules; AT27
+- F35 [major] fixed: A resent or repeated order, joined as the README tells callers to do, ships the name inside a duplicated address at high confidence with needs_followup=false — identical segments deduplicated before classification; AT28
+- F40 [major] fixed: Self-intro lines that state where the customer lives ('اني ساكن ب...', 'انا ب...', 'اني قرب ...') are silently deleted: not in the address, not in notes — intro values that are not names are kept as no_name text (leading من/ساكن/ب stripped); AT28
+- F41 [major] fixed: Payment, timing and question lines after a bare governorate become the address at HIGH confidence, so the order is confirmed with no address — payment/timing words are order chatter; continuation needs same line or digits; AT28
+- F42 [major] fixed: A delivery redirect to another governorate ('ابعثوه لبيت اهلي بالنجف') is appended to the Baghdad address at high confidence with no conflict warning — redirect words are chatter; product-line Tier A/B places count in conflicts; AT28
+- F43 [major] fixed: The common opener 'انا/اني من X' or 'اني بالكوت' / 'ana mn basra' makes the place the name, sends the real name to notes, and sometimes loses the governorate — _split_place_off accepts gated places at start / after من,ب,ساكن; mn/min/b trailers; AT28
+- F44 [major] fixed: The shop's own template filled in on one line loses the name, and the area label word leaks into the courier address — _split_embedded_labels splits before labels (with ':' or strong Arabic labels); leading label words trimmed from address; AT28
+- F49 [major] fixed: One-line labelled messages without ':' or '-' separators leak label words into the address at HIGH confidence, and the English variant loses the name — same split + city label space-OK when value resolves + _ADDR_LABEL_WORDS trimming; AT28
+- F54 [major] fixed: Latin tokens containing digits (sizes, quantities, prices, models) are accepted as Arabizi names — Arabizi digits only 2/3/5-9, single, with >=2 Latin letters; size/model patterns rejected; plus positive-evidence rule; AT29
+- F55 [major] fixed: A name correction in a later DM is ignored; the wrong name is confirmed with high confidence — embedded-label split makes the later labelled name win; AT29
+- F56 [major] fixed: A place in a delivery-instruction line is dropped from conflict detection, so another governorate stays at high confidence — delivery-word lines with a place are address segments; product-line places count in conflicts; AT29
+- F64 [major] fixed: Trailing chatter is still glued to the address, which turns a one-word address into 'high' confidence and hides the address_short follow-up — continuation requires same line or digits; extra name candidates after the address go to notes; AT28
+- F9 [major] fixed: Chatter on the line after a bare governorate becomes the address with HIGH confidence, so an order with no area gets confirmed — chatter is noise, so no continuation; address None + needs_followup; AT27
+- F12 [minor] fixed: Gazetteer gaps on common spellings and qadha centres (fails safe, but forces avoidable follow-ups) — aliases added (الخالص gated); AT27
+- F13 [minor] fixed: An explicit governorate plus a district that exists in both places raises a spurious conflict — العامرية removed from Tier C; AT27
+- F14 [minor] open: A lone neighbourhood line that isn't in the gazetteer is dropped, not kept as a low-confidence address
+- F17 [minor] fixed: Common Baghdad district 'باب المعظم' unrecognised: address dropped to notes and name downgraded — added to Tier C; AT27
+- F18 [minor] fixed: Leftover words/digits around phones leak into the address — _trim_address cuts trailing inline phone labels (not before address words like الدار); AT27
+- F19 [minor] fixed: Kurdish governorate label 'شار:' not recognised; label word leaks to notes — 'شار' added as a city label (explicit ':')
+- F26 [minor] fixed: A labelled field with an unusable value leaks into name candidates, and the 'nearest before address' rule then prefers it over the real name — rejected governorate values are no_name; AT27
+- F27 [minor] open: Address pollution: chatter, quantity tokens, a stray letter O and inline labels are kept in the address at high confidence
+- F28 [minor] fixed: The holdout is saturated (100% on 70 cases) yet a short adversarial pass finds confidently wrong outputs, so the reported accuracy overstates real performance — README holdout section states saturation and the adversarial results
+- F3 [minor] fixed: Connector 'و' between two phones becomes the customer's name — name tokens need >=2 alphanumerics; AT27
+- F33 [minor] open: An unknown place on its own line is sent to notes, so the address is lost and the name is downgraded
+- F34 [minor] open: Ordering for a relative ('الطلب باسم اختي فاطمة') loses the name
+- F36 [minor] open: A second person-name line after the address is silently glued into the address (high, no warning)
+- F37 [minor] fixed: Stale build artefacts with OLD parser code are shipped inside ./output — removed (they came from review install attempts)
+- F4 [minor] open: Question/chatter in a single-line message is picked as the name
+- F45 [minor] open: A Baghdad address line with 'سوق القياس' goes entirely to notes, and the old name of Sadr City ('الثورة قطاع 44') is not recognised
+- F46 [minor] open: Gazetteer gaps on qadha and nahiya centres (fails safe, but forces avoidable follow-ups and downgrades the name)
+- F47 [minor] open: Phone-adjacent leftovers leak into the courier address, and a letter-O typo in a number is not reported
+- F48 [minor] open: Hometown wins over place of residence when both are given: 'اني من الناصرية بس ساكن ببغداد'
+- F5 [minor] fixed: Intro/connector words leak into the address — _trim_address drops connectors/phone labels/noise at part edges
+- F50 [minor] open: Phone-line words still leak into the address (left open from review 1, F5-like)
+- F51 [minor] open: Instruction or recipient text kept verbatim in the address at HIGH confidence when it shares a line with the place
+- F52 [minor] open: A famous Baghdad district on its own line goes to notes and downgrades a correct name
+- F57 [minor] open: A phone the customer said was wrong is kept in phones[] as a backup number
+- F58 [minor] open: Number-like strings in unrecognised digit forms vanish silently into the address, with no invalid_phone record
+- F59 [minor] open: Chatter, digits and label words leak into the address at high confidence
+- F60 [minor] open: A governorate label whose value is a district puts the district in governorate_raw and deletes the address
+- F61 [minor] open: Common spellings fail safe but cost a follow-up: 'نجف اشرف', 'بغدا', 'بقداد'
+- F62 [minor] open: A name that ends in a gated place word comes back as a high-confidence name with the place inside it
+- F65 [minor] open: A single ordinary word above the address is still accepted as the name and the order is confirmed
+- F66 [minor] open: A phone number broken across lines, or typed with the letter O, leaks into the address with no hint for the bot
+- F67 [minor] open: An unknown town or neighbourhood on its own line is still dropped to notes
+- F20 [nit] fixed: README test counts are stale — README now says 80 tests
+- F38 [nit] open: Single-word names: labelled/intro gets high with no warning, unlabelled gets medium plus name_single_word
+- F39 [nit] dismissed: pip install of output/ still unverified in this environment — environment: Debian-patched setuptools/wheel install_layout bug; sdist build verified
+- F6 [nit] fixed: README test count is stale — README now says 80 tests
+- F63 [nit] open: Truncation keeps the first 4000 chars, but corrections arrive at the end of joined DMs; the build artifacts are stale
+- F68 [nit] fixed: Kunya names (ام علي, ابو مهدي) are flagged name_single_word — confidence uses raw token count; kunya with 2 tokens is high
+- F7 [nit] dismissed: pip install of output/ could not be verified in this environment — environment issue: Debian setuptools/wheel install_layout bug affects every package; sdist build verified; documented in README
+
+## Acceptance checks
+- AT1: pass (user)
+- AT2: pass (user)
+- AT3: pass (user)
+- AT4: pass (user)
+- AT5: pass (user)
+- AT6: pass (user)
+- AT7: pass (user)
+- AT8: pass (user)
+- AT9: pass (user)
+- AT21: pass (orchestrator)
+- SUITE: pass (orchestrator)
+- suite: pass (user)
+- packaging: not-run (quality)
+- AT10-AT25 (plan): pass (skeptic)
+- AT1-AT27: pass (orchestrator)
+- AT10-AT20, AT22-AT25 (plan_v3): pass (domain)
+- review-1 regressions: pass (quality)
+- unit suite: pass (skeptic)
+- pip install ./output: not-run (skeptic)
+- AT1-AT29: pass (orchestrator)

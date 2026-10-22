@@ -1,0 +1,518 @@
+{
+ "cases": [
+  {
+   "id": "B01",
+   "input": "علي حسين\n07712345678\nبغداد\nالكرادة قرب ساحة كهرمانة",
+   "expect": {
+    "name": "علي حسين",
+    "phone": "+9647712345678",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "الكرادة"
+    ]
+   },
+   "note": "plain 4-line unlabelled"
+  },
+  {
+   "id": "B02",
+   "input": "الاسم: زينب كاظم\nالرقم: ٠٧٨٠١٢٣٤٥٦٧\nالمحافظة: البصرة\nالعنوان: حي الجزائر قرب جامع الجزائر",
+   "expect": {
+    "name": "زينب كاظم",
+    "phone": "+9647801234567",
+    "governorate": "Basra",
+    "address_contains": [
+     "حي الجزائر"
+    ]
+   },
+   "note": "labelled, Arabic-Indic digits"
+  },
+  {
+   "id": "B03",
+   "input": "مرحبا اخي، محمد جاسم 0750 456 7891 اربيل عينكاوة شارع 100",
+   "expect": {
+    "name": "محمد جاسم",
+    "phone": "+9647504567891",
+    "governorate": "Erbil",
+    "address_contains": [
+     "عينكاوة"
+    ]
+   },
+   "note": "one line, greeting, spaced number, 075"
+  },
+  {
+   "id": "B04",
+   "input": "Hi! Name: Sara Ahmed, phone +964 770 987 6543, Erbil, Dream City villa 112. Thanks 🌸",
+   "expect": {
+    "name": "Sara Ahmed",
+    "phone": "+9647709876543",
+    "governorate": "Erbil",
+    "address_contains": [
+     "Dream City"
+    ]
+   },
+   "note": "English labelled, +964 spaced"
+  },
+  {
+   "id": "B05",
+   "input": "salam, ana Mustafa Kareem, raqmi 07901112233, basra el ashar qurb souq hanna sheikh",
+   "expect": {
+    "name": "Mustafa Kareem",
+    "phone": "+9647901112233",
+    "governorate": "Basra",
+    "address_contains": [
+     "ashar"
+    ]
+   },
+   "note": "Arabizi"
+  },
+  {
+   "id": "B06",
+   "input": "حيدر عباس الناصرية حي الشموخ 07823456789",
+   "expect": {
+    "name": "حيدر عباس",
+    "phone": "+9647823456789",
+    "governorate": "Dhi Qar",
+    "address_contains": [
+     "الشموخ"
+    ]
+   },
+   "note": "city->governorate, phone at end"
+  },
+  {
+   "id": "B07",
+   "input": "نور الهدى\n0771-234-5678\nالحلة - حي بابل قرب مستشفى الحلة التعليمي",
+   "expect": {
+    "name": "نور الهدى",
+    "phone": "+9647712345678",
+    "governorate": "Babil",
+    "address_contains": [
+     "حي بابل"
+    ]
+   },
+   "note": "dashed number, Hilla, name is also a phrase"
+  },
+  {
+   "id": "B08",
+   "input": "اسمي رسل علي\nرقمي 0771234567\nكربلاء حي الحسين",
+   "expect": {
+    "name": "رسل علي",
+    "phone": null,
+    "governorate": "Karbala",
+    "address_contains": [
+     "حي الحسين"
+    ]
+   },
+   "note": "10-digit typo number -> null, no fixing"
+  },
+  {
+   "id": "B09",
+   "input": "احمد فاضل 077012345678 النجف الكوفة",
+   "expect": {
+    "name": "احمد فاضل",
+    "phone": null,
+    "governorate": "Najaf",
+    "address_contains": [
+     "الكوفة"
+    ]
+   },
+   "note": "12-digit number -> null"
+  },
+  {
+   "id": "B10",
+   "input": "مريم\n+90 532 123 4567\nدهوك، زاخو قرب الجسر",
+   "expect": {
+    "name": "مريم",
+    "phone": null,
+    "governorate": "Duhok",
+    "address_contains": [
+     "زاخو"
+    ]
+   },
+   "note": "Turkish number -> null"
+  },
+  {
+   "id": "B11",
+   "input": "سجاد كريم 07735556677 زيونة شارع الربيعي",
+   "expect": {
+    "name": "سجاد كريم",
+    "phone": "+9647735556677",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "زيونة"
+    ]
+   },
+   "note": "Baghdad neighbourhood only, unmistakable"
+  },
+  {
+   "id": "B12",
+   "input": "حسن 07801234321 حي العسكري قرب المدرسة",
+   "expect": {
+    "name": "حسن",
+    "phone": "+9647801234321",
+    "governorate": null,
+    "address_contains": [
+     "حي العسكري"
+    ]
+   },
+   "note": "generic neighbourhood found in many cities -> governorate null"
+  },
+  {
+   "id": "B13",
+   "input": "07709998877\nالموصل الزهور قرب جامعة الموصل",
+   "expect": {
+    "name": null,
+    "phone": "+9647709998877",
+    "governorate": "Nineveh",
+    "address_contains": [
+     "الزهور"
+    ]
+   },
+   "note": "no name"
+  },
+  {
+   "id": "B14",
+   "input": "اسم: فاطمة الزهراء\nرقم: 07812345670\nرقم ثاني: 07706543210\nالديوانية حي العروبة",
+   "expect": {
+    "name": "فاطمة الزهراء",
+    "phone": "+9647812345670",
+    "governorate": "Qadisiyah",
+    "address_contains": [
+     "حي العروبة"
+    ]
+   },
+   "note": "backup number; primary is first"
+  },
+  {
+   "id": "B15",
+   "input": "سلام عليكم\nسلام جبار\n07701231234\nالكوت حي الكفاءات",
+   "expect": {
+    "name": "سلام جبار",
+    "phone": "+9647701231234",
+    "governorate": "Wasit",
+    "address_contains": [
+     "الكفاءات"
+    ]
+   },
+   "note": "name Salam same as greeting word"
+  },
+  {
+   "id": "B16",
+   "input": "صباح الخير 🌹 صباح نوري 0790 555 4433 العمارة حي الحسين",
+   "expect": {
+    "name": "صباح نوري",
+    "phone": "+9647905554433",
+    "governorate": "Maysan",
+    "address_contains": [
+     "حي الحسين"
+    ]
+   },
+   "note": "name Sabah same as greeting word, one line"
+  },
+  {
+   "id": "B17",
+   "input": "علي البغدادي، ٠٧٥١٢٣٤٥٦٧٨، اربيل",
+   "expect": {
+    "name": "علي البغدادي",
+    "phone": "+9647512345678",
+    "governorate": "Erbil",
+    "address_contains": []
+   },
+   "note": "surname contains Baghdad but lives in Erbil; no address"
+  },
+  {
+   "id": "B18",
+   "input": "عمر الموصلي - 07722233344 - بغداد الأعظمية راس الحواش",
+   "expect": {
+    "name": "عمر الموصلي",
+    "phone": "+9647722233344",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "راس الحواش"
+    ]
+   },
+   "note": "surname is Mosul-derived, governorate Baghdad"
+  },
+  {
+   "id": "B19",
+   "input": "Slaw, nawm Karwan Omar, 0750 333 2211, Slemani, Bakhtiari street near Family Mall",
+   "expect": {
+    "name": "Karwan Omar",
+    "phone": "+9647503332211",
+    "governorate": "Sulaymaniyah",
+    "address_contains": [
+     "Bakhtiari"
+    ]
+   },
+   "note": "Kurdish greeting/label in Latin, Slemani spelling"
+  },
+  {
+   "id": "B20",
+   "input": "ناوم: دلشاد ئەحمەد\nژمارە: 07504441122\nهەولێر، شۆڕش",
+   "expect": {
+    "name": "دلشاد ئەحمەد",
+    "phone": "+9647504441122",
+    "governorate": "Erbil",
+    "address_contains": [
+     "شۆڕش"
+    ]
+   },
+   "note": "Sorani Kurdish labels and city name"
+  },
+  {
+   "id": "B21",
+   "input": "هلا بيكم، القطعة بعدها متوفرة باللون الاسود؟ اذا متوفرة دزوها على: كرار ستار 07809876543 بعقوبة حي المعلمين",
+   "expect": {
+    "name": "كرار ستار",
+    "phone": "+9647809876543",
+    "governorate": "Diyala",
+    "address_contains": [
+     "المعلمين"
+    ]
+   },
+   "note": "product question mixed in before details"
+  },
+  {
+   "id": "B22",
+   "input": "السلام عليكم\nتدللون\nالاسم ايه حميد\nالرقم 07712223344\nالرمادي الحوز\nشكرا",
+   "expect": {
+    "name": "ايه حميد",
+    "phone": "+9647712223344",
+    "governorate": "Anbar",
+    "address_contains": [
+     "الحوز"
+    ]
+   },
+   "note": "greeting + thanks lines, label without colon"
+  },
+  {
+   "id": "B23",
+   "input": "رقمي 07901234567 واسمي عبدالله خالد الفلوجة حي نزال",
+   "expect": {
+    "name": "عبدالله خالد",
+    "phone": "+9647901234567",
+    "governorate": "Anbar",
+    "address_contains": [
+     "نزال"
+    ]
+   },
+   "note": "phone before name, Fallujah"
+  },
+  {
+   "id": "B24",
+   "input": "Ahmed Salih 07731112222 Tikrit, al qadisiya neighborhood",
+   "expect": {
+    "name": "Ahmed Salih",
+    "phone": "+9647731112222",
+    "governorate": "Saladin",
+    "address_contains": [
+     "qadisiya"
+    ]
+   },
+   "note": "neighbourhood named Qadisiya must not become governorate"
+  },
+  {
+   "id": "B25",
+   "input": "زهراء 07505556666 سامراء",
+   "expect": {
+    "name": "زهراء",
+    "phone": "+9647505556666",
+    "governorate": "Saladin",
+    "address_contains": []
+   },
+   "note": "Samarra only, no address detail"
+  },
+  {
+   "id": "B26",
+   "input": "اسمي اسراء محمود\n009647701234567\nبغداد الدورة حي الميكانيك",
+   "expect": {
+    "name": "اسراء محمود",
+    "phone": "+9647701234567",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "الدورة"
+    ]
+   },
+   "note": "00964 prefix"
+  },
+  {
+   "id": "B27",
+   "input": "تبارك سعد\n٠٧٧٠ ٤٤٤ ٥٥٥٥\nالبصرة - القبلة",
+   "expect": {
+    "name": "تبارك سعد",
+    "phone": "+9647704445555",
+    "governorate": "Basra",
+    "address_contains": [
+     "القبلة"
+    ]
+   },
+   "note": "Arabic-Indic with spaces"
+  },
+  {
+   "id": "B28",
+   "input": "مدينة الصدر قطاع 44 قرب سوق مريدي، اسمي مرتضى، 07807778899",
+   "expect": {
+    "name": "مرتضى",
+    "phone": "+9647807778899",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "قطاع 44"
+    ]
+   },
+   "note": "Sadr City, address first; sector digits not a phone"
+  },
+  {
+   "id": "B29",
+   "input": "هيمن عزيز 07701119988 حلبجة",
+   "expect": {
+    "name": "هيمن عزيز",
+    "phone": "+9647701119988",
+    "governorate": "Halabja",
+    "address_contains": []
+   },
+   "note": "Halabja"
+  },
+  {
+   "id": "B30",
+   "input": "kirkuk, rahimawa. name: Lana, 07511223344",
+   "expect": {
+    "name": "Lana",
+    "phone": "+9647511223344",
+    "governorate": "Kirkuk",
+    "address_contains": [
+     "rahimawa"
+    ]
+   },
+   "note": "English, governorate first, label mid-message"
+  },
+  {
+   "id": "B31",
+   "input": "حسين علي حسين\nالسماوة\nشارع الكورنيش\n٠٧٨٢٣٣٣٤٤٤٥",
+   "expect": {
+    "name": "حسين علي حسين",
+    "phone": "+9647823334445",
+    "governorate": "Muthanna",
+    "address_contains": [
+     "الكورنيش"
+    ]
+   },
+   "note": "three-part name, Samawah, phone last in Indic digits"
+  },
+  {
+   "id": "B32",
+   "input": "الاسم مها جاسم، البصرة الزبير، الرقم ادزه بعدين",
+   "expect": {
+    "name": "مها جاسم",
+    "phone": null,
+    "governorate": "Basra",
+    "address_contains": [
+     "الزبير"
+    ]
+   },
+   "note": "phone promised later -> null"
+  },
+  {
+   "id": "B33",
+   "input": "ضياء كامل 07412345678 الكوت شارع المحافظة",
+   "expect": {
+    "name": "ضياء كامل",
+    "phone": null,
+    "governorate": "Wasit",
+    "address_contains": [
+     "شارع المحافظة"
+    ]
+   },
+   "note": "invalid 074 prefix -> null; address word محافظة"
+  },
+  {
+   "id": "B34",
+   "input": "Hala, esmi Hawraa 3adnan, 077-0000-1122, Karbala, 7ay al naqeeb",
+   "expect": {
+    "name": "Hawraa 3adnan",
+    "phone": "+9647700001122",
+    "governorate": "Karbala",
+    "address_contains": [
+     "naqeeb"
+    ]
+   },
+   "note": "Arabizi with digits-as-letters in name"
+  },
+  {
+   "id": "B35",
+   "input": "ياسر 07801112223 الاعظمية قرب جامع ابو حنيفة",
+   "expect": {
+    "name": "ياسر",
+    "phone": "+9647801112223",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "الاعظمية"
+    ]
+   },
+   "note": "Adhamiya without Baghdad"
+  },
+  {
+   "id": "B36",
+   "input": "نبأ 07712340000 حي الجامعة قرب الفلكة",
+   "expect": {
+    "name": "نبأ",
+    "phone": "+9647712340000",
+    "governorate": null,
+    "address_contains": [
+     "حي الجامعة"
+    ]
+   },
+   "note": "ambiguous neighbourhood (exists in many cities) -> null"
+  },
+  {
+   "id": "B37",
+   "input": "الطلب لاختي، اسمها شهد ماجد ورقمها 07901239876، النجف حي الأمير",
+   "expect": {
+    "name": "شهد ماجد",
+    "phone": "+9647901239876",
+    "governorate": "Najaf",
+    "address_contains": [
+     "حي الأمير"
+    ]
+   },
+   "note": "ordering for sister, اسمها/رقمها labels"
+  },
+  {
+   "id": "B38",
+   "input": "اسامة طارق\nبغداد/ حي الجهاد محلة 885 زقاق 23 دار 14\n07703334455",
+   "expect": {
+    "name": "اسامة طارق",
+    "phone": "+9647703334455",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "محلة 885"
+    ]
+   },
+   "note": "mahalla/zuqaq/dar numbers must not be taken as phone"
+  },
+  {
+   "id": "B39",
+   "input": "منتظر هادي 9647801112233 ذي قار الشطرة",
+   "expect": {
+    "name": "منتظر هادي",
+    "phone": "+9647801112233",
+    "governorate": "Dhi Qar",
+    "address_contains": [
+     "الشطرة"
+    ]
+   },
+   "note": "964 without plus; governorate typed directly"
+  },
+  {
+   "id": "B40",
+   "input": "اسمي Ali Raad 🙏 07822 111 000 البصرة التنومة",
+   "expect": {
+    "name": "Ali Raad",
+    "phone": "+9647822111000",
+    "governorate": "Basra",
+    "address_contains": [
+     "التنومة"
+    ]
+   },
+   "note": "Arabic label with Latin name, odd digit grouping"
+  }
+ ]
+}

@@ -1,0 +1,395 @@
+{
+ "description": "Independent holdout set of 30 Iraqi COD Instagram DMs (replies to 'send name, number, governorate, address'), written without seeing parser code. Expectations: exact name or null, canonical +9647 phone or null, English governorate or null, address substrings.",
+ "cases": [
+  {
+   "id": "H01",
+   "input": "هلا اخي\nمصطفى عباس ناصر\nالناصرية حي الشهداء قرب جامع الرسول\n07813456720",
+   "expect": {
+    "name": "مصطفى عباس ناصر",
+    "phone": "+9647813456720",
+    "governorate": "Dhi Qar",
+    "address_contains": [
+     "حي الشهداء"
+    ]
+   },
+   "note": "unlabelled 4 lines with greeting; city name Nasiriyah -> Dhi Qar"
+  },
+  {
+   "id": "H02",
+   "input": "الاسم: نور الهدى كريم\nالرقم: ٠٧٧٢٤٥١٨٨٣٠\nالمحافظة: بابل\nالعنوان: الحلة حي الجامعة قرب صيدلية الشفاء",
+   "expect": {
+    "name": "نور الهدى كريم",
+    "phone": "+9647724518830",
+    "governorate": "Babil",
+    "address_contains": [
+     "حي الجامعة"
+    ]
+   },
+   "note": "Arabic labelled form, Arabic-Indic digits"
+  },
+  {
+   "id": "H03",
+   "input": "زهراء عادل الزبير حي الرسالة ٠٧٨٠٢٣٣٤٤٥٥",
+   "expect": {
+    "name": "زهراء عادل",
+    "phone": "+9647802334455",
+    "governorate": "Basra",
+    "address_contains": [
+     "حي الرسالة"
+    ]
+   },
+   "note": "single line, qadha Zubair -> Basra, name before town"
+  },
+  {
+   "id": "H04",
+   "input": "hi\nmy name is Hussein Ali\n0771 845 2290\nbaghdad, al mansour near al rowad school",
+   "expect": {
+    "name": "Hussein Ali",
+    "phone": "+9647718452290",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "mansour"
+    ]
+   },
+   "note": "English message, spaced phone, 'my name is' prefix"
+  },
+  {
+   "id": "H05",
+   "input": "ڕێباز عومەر\nهەولێر شەقامی سەد مەتری\n۰۷۵۰۴۴۶۷۱۲۸",
+   "expect": {
+    "name": "ڕێباز عومەر",
+    "phone": "+9647504467128",
+    "governorate": "Erbil",
+    "address_contains": [
+     "شەقامی سەد مەتری"
+    ]
+   },
+   "note": "Kurdish script name and place, Persian digits"
+  },
+  {
+   "id": "H06",
+   "input": "مرحبا 🌸\nشيماء رزكار\nالسليمانية سرجنار قرب اسواق نالي\n07701193648\nوالقياس M لو سمحت",
+   "expect": {
+    "name": "شيماء رزكار",
+    "phone": "+9647701193648",
+    "governorate": "Sulaymaniyah",
+    "address_contains": [
+     "سرجنار"
+    ]
+   },
+   "note": "emoji greeting, trailing size request must not pollute name"
+  },
+  {
+   "id": "H07",
+   "input": "حيدر كاظم جبار\nالكوت حي الكفاءات\n0790 553 2187",
+   "expect": {
+    "name": "حيدر كاظم جبار",
+    "phone": "+9647905532187",
+    "governorate": "Wasit",
+    "address_contains": [
+     "حي الكفاءات"
+    ]
+   },
+   "note": "Kut (city) -> Wasit, phone split by spaces"
+  },
+  {
+   "id": "H08",
+   "input": "اسمي علي رحيم\nالديوانية حي العروبة\n07827319054\nوهذا رقم ثاني 07733204561 اذا ما رديت",
+   "expect": {
+    "name": "علي رحيم",
+    "phone": "+9647827319054",
+    "governorate": "Qadisiyah",
+    "address_contains": [
+     "حي العروبة"
+    ]
+   },
+   "note": "'اسمي' prefix, backup number must not become primary"
+  },
+  {
+   "id": "H09",
+   "input": "ام زينب\nالعمارة حي الحسين خلف الكراج الموحد\n07715560983",
+   "expect": {
+    "name": "ام زينب",
+    "phone": "+9647715560983",
+    "governorate": "Maysan",
+    "address_contains": [
+     "حي الحسين"
+    ]
+   },
+   "note": "kunya name, Amarah at line start -> Maysan"
+  },
+  {
+   "id": "H10",
+   "input": "السلام عليكم\nحسين فلاح\nالسماوة، شارع بغداد قرب مول السماوة\n07806612437\nشكرا الله يخليك",
+   "expect": {
+    "name": "حسين فلاح",
+    "phone": "+9647806612437",
+    "governorate": "Muthanna",
+    "address_contains": [
+     "شارع بغداد"
+    ]
+   },
+   "note": "street named after Baghdad inside Samawah; greeting and thanks"
+  },
+  {
+   "id": "H11",
+   "input": "كرار جاسم\nمدينة الصدر قطاع ٤٤ قرب سوق مريدي\n٠٧٨١٥٥٢٩٩٠٣",
+   "expect": {
+    "name": "كرار جاسم",
+    "phone": "+9647815529903",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "سوق مريدي"
+    ]
+   },
+   "note": "Baghdad district only (Sadr City), Arabic-Indic digits; sector number not a phone"
+  },
+  {
+   "id": "H12",
+   "input": "مرتضى حسن النجفي\nكربلاء حي الحر قرب الحسينية\n07714023658",
+   "expect": {
+    "name": "مرتضى حسن النجفي",
+    "phone": "+9647714023658",
+    "governorate": "Karbala",
+    "address_contains": [
+     "حي الحر"
+    ]
+   },
+   "note": "nisba surname النجفي must not make it Najaf"
+  },
+  {
+   "id": "H13",
+   "input": "رسل مهدي\nبغداد الشعلة قرب الجامع الكبير\n0770 412 556",
+   "expect": {
+    "name": "رسل مهدي",
+    "phone": null,
+    "governorate": "Baghdad",
+    "address_contains": [
+     "الشعلة"
+    ]
+   },
+   "note": "phone one digit short -> null, not padded"
+  },
+  {
+   "id": "H14",
+   "input": "Sara Mohammed\n+971 55 214 3398\nbasra, al jazair street near jinan mall",
+   "expect": {
+    "name": "Sara Mohammed",
+    "phone": null,
+    "governorate": "Basra",
+    "address_contains": [
+     "jazair"
+    ]
+   },
+   "note": "UAE number -> phone null"
+  },
+  {
+   "id": "H15",
+   "input": "07505528174\nدهوك مالطا قرب جامعة دهوك",
+   "expect": {
+    "name": null,
+    "phone": "+9647505528174",
+    "governorate": "Duhok",
+    "address_contains": [
+     "مالطا"
+    ]
+   },
+   "note": "no name given; phone first line"
+  },
+  {
+   "id": "H16",
+   "input": "منتظر علي\nالنجف حي الانصار قرب مطعم الساهر",
+   "expect": {
+    "name": "منتظر علي",
+    "phone": null,
+    "governorate": "Najaf",
+    "address_contains": [
+     "حي الانصار"
+    ]
+   },
+   "note": "phone missing entirely"
+  },
+  {
+   "id": "H17",
+   "input": "مريم سعد / بعقوبة حي المعلمين / +964 773 908 1256",
+   "expect": {
+    "name": "مريم سعد",
+    "phone": "+9647739081256",
+    "governorate": "Diyala",
+    "address_contains": [
+     "حي المعلمين"
+    ]
+   },
+   "note": "single line with slashes, +964 spaced form, Baqubah -> Diyala"
+  },
+  {
+   "id": "H18",
+   "input": "Name: Zainab Hadi\nPhone: 07901-332-845\nCity: Kirkuk\nAddress: Iskan, near Al Mustaqbal pharmacy",
+   "expect": {
+    "name": "Zainab Hadi",
+    "phone": "+9647901332845",
+    "governorate": "Kirkuk",
+    "address_contains": [
+     "Iskan"
+    ]
+   },
+   "note": "English labelled form, dash-split phone"
+  },
+  {
+   "id": "H19",
+   "input": "يونس طلال\nالموصل الزهور قرب جامع الزهور\n0770-628-1194",
+   "expect": {
+    "name": "يونس طلال",
+    "phone": "+9647706281194",
+    "governorate": "Nineveh",
+    "address_contains": [
+     "الزهور"
+    ]
+   },
+   "note": "Mosul -> Nineveh, dashes in phone"
+  },
+  {
+   "id": "H20",
+   "input": "عمر خالد الدليمي\nالرمادي حي الضباط\n07805547316\nعندي طلب الحذاء الابيض قياس 42",
+   "expect": {
+    "name": "عمر خالد الدليمي",
+    "phone": "+9647805547316",
+    "governorate": "Anbar",
+    "address_contains": [
+     "حي الضباط"
+    ]
+   },
+   "note": "Ramadi -> Anbar; product line with size after phone"
+  },
+  {
+   "id": "H21",
+   "input": "محمد صباح\nتكريت حي القادسية قرب جامعة تكريت\n07722019645",
+   "expect": {
+    "name": "محمد صباح",
+    "phone": "+9647722019645",
+    "governorate": "Saladin",
+    "address_contains": [
+     "حي القادسية"
+    ]
+   },
+   "note": "neighbourhood named Qadisiyah inside Tikrit must not win"
+  },
+  {
+   "id": "H22",
+   "input": "سلاو\nهێمن کەریم\nسلێمانی، گەڕەکی ئازادی\n٠٧٧٠١٨٤٥٥٣٢",
+   "expect": {
+    "name": "هێمن کەریم",
+    "phone": "+9647701845532",
+    "governorate": "Sulaymaniyah",
+    "address_contains": [
+     "ئازادی"
+    ]
+   },
+   "note": "Kurdish greeting and script, Arabic-Indic digits"
+  },
+  {
+   "id": "H23",
+   "input": "ئاوات محمد\nهەڵەبجە نزیک مزگەوتی گەورە\n07512340987",
+   "expect": {
+    "name": "ئاوات محمد",
+    "phone": "+9647512340987",
+    "governorate": "Halabja",
+    "address_contains": [
+     "مزگەوتی گەورە"
+    ]
+   },
+   "note": "Halabja in Kurdish script -> own governorate per contract"
+  },
+  {
+   "id": "H24",
+   "input": "الاسم الثلاثي : سجاد حميد عبد الله\nرقم الموبايل : 07709914372\nالمحافظة : بغداد\nالمنطقة : الكاظمية\nاقرب نقطة دالة : مقابل باب المراد",
+   "expect": {
+    "name": "سجاد حميد عبد الله",
+    "phone": "+9647709914372",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "الكاظمية"
+    ]
+   },
+   "note": "full labelled form with area and landmark labels"
+  },
+  {
+   "id": "H25",
+   "input": "احمد سلمان، الحلة، حي نادر، 07824471139",
+   "expect": {
+    "name": "احمد سلمان",
+    "phone": "+9647824471139",
+    "governorate": "Babil",
+    "address_contains": [
+     "حي نادر"
+    ]
+   },
+   "note": "comma-separated single line, Hillah -> Babil"
+  },
+  {
+   "id": "H26",
+   "input": "slm 3likm\nali kareem\nbasra / al tuwaisa near shatt al arab hotel\n07707392815",
+   "expect": {
+    "name": "ali kareem",
+    "phone": "+9647707392815",
+    "governorate": "Basra",
+    "address_contains": [
+     "tuwaisa"
+    ]
+   },
+   "note": "Arabizi greeting and lowercase Latin name"
+  },
+  {
+   "id": "H27",
+   "input": "فاطمة حسن البصري\nالناصرية حي اريدو\n07702246685",
+   "expect": {
+    "name": "فاطمة حسن البصري",
+    "phone": "+9647702246685",
+    "governorate": "Dhi Qar",
+    "address_contains": [
+     "حي اريدو"
+    ]
+   },
+   "note": "nisba البصري in Nasiriyah order"
+  },
+  {
+   "id": "H28",
+   "input": "اريد الفستان الاحمر قياس L سعره 35 الف\nالاسم دعاء فاضل\nبغداد زيونة شارع الربيعي\n009647718830257",
+   "expect": {
+    "name": "دعاء فاضل",
+    "phone": "+9647718830257",
+    "governorate": "Baghdad",
+    "address_contains": [
+     "زيونة"
+    ]
+   },
+   "note": "product/price line first, label without colon, 00964 prefix"
+  },
+  {
+   "id": "H29",
+   "input": "Hello! I'm Lana Aziz, number 0750 9123 846, Erbil Ankawa near Ankawa mall 🙏",
+   "expect": {
+    "name": "Lana Aziz",
+    "phone": "+9647509123846",
+    "governorate": "Erbil",
+    "address_contains": [
+     "Ankawa"
+    ]
+   },
+   "note": "one English sentence with everything inline"
+  },
+  {
+   "id": "H30",
+   "input": "ابو علي\nحي العسكري قرب الجامع\n07816643201",
+   "expect": {
+    "name": "ابو علي",
+    "phone": "+9647816643201",
+    "governorate": null,
+    "address_contains": [
+     "حي العسكري"
+    ]
+   },
+   "note": "generic district existing in many cities -> governorate null"
+  }
+ ]
+}
