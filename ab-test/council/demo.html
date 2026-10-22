@@ -1,0 +1,242 @@
+<title>Dallal Council Run</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; a sequenced process strip; an interactive comparison bench; ledgers of objections and findings. */
+:root {
+  --bg: #f3f5f2; --surface: #ffffff; --ink: #17201e; --muted: #5b6764; --line: #d8dfdb;
+  --accent: #0d6b62; --accent-soft: #dcefeb; --seal: #b0412b; --seal-soft: #f6e2dc; --gold: #9a7414; --good: #237a3b; --good-soft: #e1f1e4;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans Arabic", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111816; --surface: #18211f; --ink: #e6ece9; --muted: #9aa8a4; --line: #2b3633;
+  --accent: #4fc0b2; --accent-soft: #163632; --seal: #e57a62; --seal-soft: #3a211b; --gold: #d8b04a; --good: #6cc684; --good-soft: #17301e; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #111816; --surface: #18211f; --ink: #e6ece9; --muted: #9aa8a4; --line: #2b3633;
+  --accent: #4fc0b2; --accent-soft: #163632; --seal: #e57a62; --seal-soft: #3a211b; --gold: #d8b04a; --good: #6cc684; --good-soft: #17301e; color-scheme: dark }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.6; }
+.wrap { max-width: 980px; margin: 0 auto; padding-block: 40px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 56px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.15; }
+h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 24px; font-weight: 700; }
+h3 { font-size: 16px; font-weight: 700; }
+p { margin: 0; max-width: 68ch; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.muted { color: var(--muted); }
+section { display: grid; gap: 18px; min-width: 0; }
+header { display: grid; gap: 16px; }
+.figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 8px; }
+.fig { border-top: 3px solid var(--accent); padding-top: 10px; display: grid; gap: 2px; }
+.fig b { font-family: var(--display); font-size: 30px; font-variant-numeric: tabular-nums; }
+.fig span { color: var(--muted); font-size: 13px; }
+/* process strip */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; counter-reset: s; }
+.steps li { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 4px; align-content: start; counter-increment: s; }
+.steps li::before { content: counter(s); font-family: var(--mono); font-size: 12px; color: var(--accent); }
+.steps li b { font-family: var(--display); font-size: 15px; }
+.steps li span { font-size: 13px; color: var(--muted); }
+/* seats */
+.seats { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.seat { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; display: grid; gap: 6px; }
+.seat .meta { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+/* bench */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters button, .msgs button { font: inherit; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 14px; }
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.bench { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 760px) { .bench { grid-template-columns: minmax(0, 1fr); } }
+.msgs { display: grid; gap: 8px; max-height: 560px; overflow-y: auto; padding-right: 4px; }
+.msgs button { border-radius: 10px; text-align: start; display: grid; gap: 4px; padding: 10px 12px; }
+.msgs button[aria-current="true"] { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.msgs .snip { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 14px; }
+.tag { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; justify-self: start; padding: 1px 8px; border-radius: 999px; }
+.tag.council { background: var(--good-soft); color: var(--good); }
+.tag.single { background: var(--seal-soft); color: var(--seal); }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 14px; min-width: 0; }
+.dm { background: var(--accent-soft); border-radius: 14px 14px 14px 4px; padding: 12px 14px; white-space: pre-wrap; font-size: 16px; overflow-wrap: anywhere; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: start; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+td.f { font-family: var(--mono); font-size: 12px; color: var(--muted); white-space: nowrap; }
+td .ok { color: var(--good); font-weight: 600; } td .no { color: var(--seal); font-weight: 600; }
+td.bad { background: var(--seal-soft); }
+.note { font-size: 14px; border-left: 3px solid var(--gold); padding-left: 12px; }
+/* ledgers */
+.ledger { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.row { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.row .sev { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; align-self: start; padding: 2px 6px; border-radius: 4px; text-align: center; }
+.sev.blocker { background: var(--seal); color: var(--surface); }
+.sev.major { background: var(--seal-soft); color: var(--seal); }
+.sev.minor { background: var(--accent-soft); color: var(--accent); }
+.row .what { display: grid; gap: 4px; }
+.row .how { font-size: 14px; color: var(--muted); }
+.row .how::before { content: "→ "; color: var(--accent); }
+.who { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+/* scores */
+.scores td, .scores th { text-align: end; font-variant-numeric: tabular-nums; }
+.scores td:first-child, .scores th:first-child { text-align: start; }
+.scores tr.hl td { background: var(--good-soft); font-weight: 600; }
+.bar { display: inline-block; height: 8px; border-radius: 4px; background: var(--accent); vertical-align: middle; margin-inline-start: 6px; }
+.take { display: grid; gap: 10px; }
+[dir="rtl"], .ar { font-family: var(--body); }
+@media (prefers-reduced-motion: no-preference) { .panel { transition: border-color .2s; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">project-council · demo run</div>
+    <h1>What the council did with one important project</h1>
+    <p>The prompt: <em>"This is a big, important project for me… build the order-details parser for Dallal"</em>, a Python package that turns Iraqi Instagram DMs into a clean cash-on-delivery order: name, phone, governorate, address. Five specialist agents planned it, argued about it, had it built, and reviewed the real result twice. Everything below comes from that run's own records.</p>
+    <div class="figs">
+      <div class="fig"><b>151</b><span>test cases written by the seats; 90 were sealed from the builder</span></div>
+      <div class="fig"><b>27</b><span>objections raised in the debate (1 blocker, 16 major), all answered in the plan</span></div>
+      <div class="fig"><b>45 / 50</b><span>review findings fixed; 5 ruled by design or documented limits</span></div>
+      <div class="fig"><b>98.6</b><span>score on the hidden hard test set (single agent: 91.9 and 97.5)</span></div>
+    </div>
+  </header>
+
+  <section>
+    <div class="eyebrow">the run, in order</div>
+    <h2>How the council worked</h2>
+    <ol class="steps">
+      <li><b>Charter</b><span>Goal turned into checkable acceptance tests, a case format and a 90% target.</span></li>
+      <li><b>5 seats propose</b><span>Each one alone, without seeing the others. They wrote 151 cases between them.</span></li>
+      <li><b>Seal the holdout</b><span>61 cases go to the builder; 90 stay hidden for scoring.</span></li>
+      <li><b>Debate</b><span>27 objections with evidence; plan v1 → v2; 12 decisions.</span></li>
+      <li><b>One builder</b><span>A separate agent builds from the decisions and the 61 dev cases.</span></li>
+      <li><b>Score</b><span>Sealed holdout 90/90, dev 61/61.</span></li>
+      <li><b>Review pass 1</b><span>5 seats test the real package: 37 fresh cases, 31 findings.</span></li>
+      <li><b>Review pass 2</b><span>40 more fresh cases (39 pass before fixes), 19 findings.</span></li>
+      <li><b>Gate</b><span>No open blocker or major, acceptance passing, target met → ship.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="eyebrow">independent proposals</div>
+    <h2>The five seats</h2>
+    <div class="seats" id="seats"></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">same message, two parsers</div>
+    <h2>Single agent vs council, on messages neither had seen</h2>
+    <p class="muted">These messages come from my hidden test sets. Neither run saw them. Most differences favour the council, and four go the other way; they're shown too.</p>
+    <div class="filters" role="group" aria-label="Filter examples">
+      <button type="button" data-f="all" aria-pressed="true">All 12</button>
+      <button type="button" data-f="council" aria-pressed="false">Council better (8)</button>
+      <button type="button" data-f="single" aria-pressed="false">Single agent better (4)</button>
+    </div>
+    <div class="bench">
+      <div class="msgs" id="msgs" aria-label="Messages"></div>
+      <div class="panel" id="panel" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">the debate</div>
+    <h2>What the arguing changed before any code existed</h2>
+    <p class="muted">An objection only counted with evidence. Each was answered by changing a decision or by a reason in the next plan.</p>
+    <div class="ledger" id="objections"></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">the review</div>
+    <h2>What the reviewers caught in the real package</h2>
+    <p class="muted">Every blocker and major was reproduced by the chair before fixing, then re-run after the fix.</p>
+    <div class="ledger" id="findings"></div>
+  </section>
+
+  <section>
+    <div class="eyebrow">the honest scoreboard</div>
+    <h2>Hidden tests, cost, and what it means</h2>
+    <div class="tablewrap">
+      <table class="scores">
+        <thead><tr><th>run</th><th>A · 48 realistic</th><th>B · 32 hard</th><th>C · 600 generated</th><th>cost</th></tr></thead>
+        <tbody id="scores"></tbody>
+      </table>
+    </div>
+    <div class="take">
+      <p>On a well-defined coding task, Claude alone is already near the top, and it varies between runs (91.9 and 97.5 on the hard set). The improved council scored highest on the hard set and matched the single agent elsewhere, at about six times the cost.</p>
+      <p>Its own sealed score (100%) was a little more optimistic than the truly unseen tests (98.4–99.1). The skill now says so: use the light mode for clear tasks, and the full council when inputs are messy, the domain is unfamiliar or mistakes cost money.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+const EX = [{"set": "B", "n": 6, "text": "رقم اخوي 07701112222 رقمي 07803334444\nاسمي باقر\nالنجف حي السعد", "exp": {"phone": "+9647803334444", "governorate": "najaf", "name": "باقر", "address": "السعد"}, "base": {"name": "باقر", "phone": "+9647701112222", "governorate": "Najaf", "address": "حي السعد"}, "council": {"name": "باقر", "phone": "+9647803334444", "governorate": "Najaf", "address": "حي السعد"}, "bok": {"phone": false, "gov": true, "name": true, "addr": true}, "cok": {"phone": true, "gov": true, "name": true, "addr": true}, "winner": "council", "note": "Two numbers: «رقم اخوي» is the brother's, «رقمي» is the customer's own. The council's skeptic seat raised labelled secondary numbers in the debate, and the build follows that rule."}, {"set": "B", "n": 23, "text": "ساكن ببغداد بس التوصيل للبصرة العشار\nاسمي وسام 07701231234", "exp": {"phone": "+9647701231234", "governorate": "basra", "name": "وسام", "address": "العشار"}, "base": {"name": "وسام", "phone": "+9647701231234", "governorate": "Baghdad", "address": "التوصيل البصرة العشار"}, "council": {"name": "وسام", "phone": "+9647701231234", "governorate": "Basra", "address": "العشار"}, "bok": {"phone": true, "gov": false, "name": true, "addr": true}, "cok": {"phone": true, "gov": true, "name": true, "addr": true}, "winner": "council", "note": "The customer lives in Baghdad but wants delivery to Basra. The council decided that a delivery cue («التوصيل لـ») beats where the customer lives."}, {"set": "B", "n": 21, "text": "علي الغربي\nكاظم 07809998888", "exp": {"phone": "+9647809998888", "governorate": "maysan", "name": "كاظم", "address": null}, "base": {"name": "علي الغربي", "phone": "+9647809998888", "governorate": null, "address": null}, "council": {"name": "كاظم", "phone": "+9647809998888", "governorate": "Maysan", "address": "علي الغربي"}, "bok": {"phone": true, "gov": false, "name": false, "addr": true}, "cok": {"phone": true, "gov": true, "name": true, "addr": true}, "winner": "council", "note": "«علي الغربي» is a town in Maysan, not a person. The domain seat's gazetteer knew it; the single agent took it as the name."}, {"set": "B", "n": 15, "text": "القائم حي الكرابلة\nعبدالله 07813332222", "exp": {"phone": "+9647813332222", "governorate": "anbar", "name": "عبدالله", "address": "القائم"}, "base": {"name": "عبدالله", "phone": "+9647813332222", "governorate": null, "address": "القائم حي الكرابلة"}, "council": {"name": "عبدالله", "phone": "+9647813332222", "governorate": "Anbar", "address": "القائم حي الكرابلة"}, "bok": {"phone": true, "gov": false, "name": true, "addr": true}, "cok": {"phone": true, "gov": true, "name": true, "addr": true}, "winner": "council", "note": "Al-Qaim is a town in Anbar. The single agent didn't know it and left the governorate empty."}, {"set": "A", "n": 11, "text": "Duhok, Zakho road, near Mazi supermarket. Rawand 0750 444 5566", "exp": {"phone": "+9647504445566", "governorate": "duhok", "name": "Rawand", "address": "Zakho road"}, "base": {"name": null, "phone": "+9647504445566", "governorate": "Duhok", "address": "Zakho road - near Mazi supermarket - Rawand"}, "council": {"name": "Rawand", "phone": "+9647504445566", "governorate": "Duhok", "address": "Zakho road, near Mazi supermarket"}, "bok": {"phone": true, "gov": true, "name": false, "addr": true}, "cok": {"phone": true, "gov": true, "name": true, "addr": true}, "winner": "council", "note": "An English message with the name at the very end. The single agent folded «Rawand» into the address."}, {"set": "B", "n": 32, "text": "الحاج كاظم\nالديوانية حي العسكري\n07807654321", "exp": {"phone": "+9647807654321", "governorate": "qadisiyyah", "name": "الحاج كاظم", "address": "العسكري"}, "base": {"name": null, "phone": "+9647807654321", "governorate": "Qadisiyyah", "address": "الحاج كاظم - الديوانية حي العسكري"}, "council": {"name": "الحاج كاظم", "phone": "+9647807654321", "governorate": "Qadisiyyah", "address": "الديوانية حي العسكري"}, "bok": {"phone": true, "gov": true, "name": false, "addr": true}, "cok": {"phone": true, "gov": true, "name": true, "addr": true}, "winner": "council", "note": "«الحاج» is an honorific, so «الحاج كاظم» is the name. The single agent pushed it into the address."}, {"set": "A", "n": 20, "text": "حلبجة\nشوان\n07505556677", "exp": {"phone": "+9647505556677", "governorate": "halabja", "name": "شوان", "address": null}, "base": {"name": null, "phone": "+9647505556677", "governorate": "Halabja", "address": "شوان"}, "council": {"name": "شوان", "phone": "+9647505556677", "governorate": "Halabja", "address": null}, "bok": {"phone": true, "gov": true, "name": false, "addr": true}, "cok": {"phone": true, "gov": true, "name": true, "addr": true}, "winner": "council", "note": "Town, then name, then phone, each on its own line. The single agent treated the name as the address."}, {"set": "B", "n": 17, "text": "رانية\nدانا 07505554444", "exp": {"phone": "+9647505554444", "governorate": "sulaymaniyah", "name": "دانا", "address": "رانية"}, "base": {"name": null, "phone": "+9647505554444", "governorate": "Sulaymaniyah", "address": "رانية - دانا"}, "council": {"name": "دانا", "phone": "+9647505554444", "governorate": "Sulaymaniyah", "address": "رانية"}, "bok": {"phone": true, "gov": true, "name": false, "addr": true}, "cok": {"phone": true, "gov": true, "name": true, "addr": true}, "winner": "council", "note": "Kurdish town Ranya with the name Dana. Same pattern: the council splits name and place correctly."}, {"set": "A", "n": 42, "text": "+964-770-765-4321 / Najaf / Ali", "exp": {"phone": "+9647707654321", "governorate": "najaf", "name": "Ali", "address": null}, "base": {"name": "Ali", "phone": "+9647707654321", "governorate": "Najaf", "address": null}, "council": {"name": null, "phone": "+9647707654321", "governorate": "Najaf", "address": "Ali"}, "bok": {"phone": true, "gov": true, "name": true, "addr": true}, "cok": {"phone": true, "gov": true, "name": false, "addr": true}, "winner": "single", "note": "A loss: in «/ Najaf / Ali» the council took «Ali» as the address."}, {"set": "A", "n": 43, "text": "رقمي 964 772 765 4321 بابل المسيب علي", "exp": {"phone": "+9647727654321", "governorate": "babil", "name": "علي", "address": "المسيب"}, "base": {"name": "علي", "phone": "+9647727654321", "governorate": "Babil", "address": "المسيب"}, "council": {"name": null, "phone": "+9647727654321", "governorate": "Babylon", "address": "المسيب علي"}, "bok": {"phone": true, "gov": true, "name": true, "addr": true}, "cok": {"phone": true, "gov": true, "name": false, "addr": true}, "winner": "single", "note": "A loss: the council glued the trailing name «علي» onto the address. («Babylon» is an accepted spelling of Babil.)"}, {"set": "B", "n": 2, "text": "ناو: هێمن\nژمارە: 0750 123 4567\nهەولێر، گەڕەکی ئازادی", "exp": {"phone": "+9647501234567", "governorate": "erbil", "name": "هێمن", "address": "ئازادی"}, "base": {"name": "هێمن", "phone": "+9647501234567", "governorate": "Erbil", "address": "گەڕەکی ئازادی"}, "council": {"name": "ژمارە", "phone": "+9647501234567", "governorate": "Erbil", "address": "ناو هێمن، گەڕەکی ئازادی"}, "bok": {"phone": true, "gov": true, "name": true, "addr": true}, "cok": {"phone": true, "gov": true, "name": false, "addr": true}, "winner": "single", "note": "A loss: in Kurdish Sorani, «ناو» means name and «ژمارە» means number. The council took the label word as the name."}, {"set": "A", "n": 34, "text": "عنواني محافظة واسط الكوت، الاسم حنين، الرقم ٠٧٨١٢٣٤٥٦٧٨", "exp": {"phone": "+9647812345678", "governorate": "wasit", "name": "حنين", "address": "الكوت"}, "base": {"name": "حنين", "phone": "+9647812345678", "governorate": "Wasit", "address": "الكوت"}, "council": {"name": "حنين", "phone": "+9647812345678", "governorate": "Wasit", "address": null}, "bok": {"phone": true, "gov": true, "name": true, "addr": true}, "cok": {"phone": true, "gov": true, "name": true, "addr": false}, "winner": "single", "note": "Partly by design: the council ruled that an address that is only the capital city isn't deliverable, so it returns no address and asks the customer."}];
+const SEATS = [
+  ["Skeptic (red team)", 32, "Build a deterministic, stdlib-only parser whose first rule is never to be confidently wrong: normalise digits, letters and spellings first, then accept a phone only from a strict grammar."],
+  ["User advocate", 30, "Design for what Iraqi customers actually type, not tidy forms: a few short lines or one run-on line, mixing greetings, product chat, prices and emojis with the order data."],
+  ["Domain expert: Iraqi COD addresses, governorates, phone numbering and dialect", 42, "Treat it as a gazetteer-and-normaliser problem, not generic name recognition: every governorate and its capital, Kurdish spellings, and towns that would be mistaken for names."],
+  ["Quality engineer", 25, "A pipeline of small, separately tested stages: normalise → phones → governorate → labels and name → address → record with review flags."],
+  ["Builder (pragmatist)", 22, "Ship a single-pass, rule-based parser in about five small modules with a data-only gazetteer, built in strict order and tested stage by stage."]
+];
+const OBJ = [
+  ["blocker", "Quality", "The planned eval command didn't match the format the sealed-holdout scorer needs, so the 90% gate couldn't be measured at all.", "The eval CLI prints exactly the scorer's format; a test now guards it."],
+  ["major", "Domain", "In Baghdad apartment blocks, «العمارة» means \"the building\", but the plan would read it as the governorate Maysan (Amarah).", "«العمارة» followed by a number, flat or floor, or after «قرب/مجمع», is a building, not Maysan."],
+  ["major", "Domain", "Iraqis name a governorate by its capital (الناصرية = Dhi Qar, الحلة = Babil), so two different capitals in one message slipped past the conflict check.", "Capitals count as governorate names for conflict and multiple-governorate checks."],
+  ["major", "User + Domain", "A message with only the capital city would ship as a deliverable address, which the courier can't use.", "Capital-only address → no address + ask the customer."],
+  ["major", "Domain + Skeptic", "Common given names are also place names (منصور, صلاح الدين, رانية): they would be lost as names and wrongly set the governorate.", "Names in the name position are excluded from place evidence; colliding aliases need context."],
+  ["major", "Quality", "Governorate was resolved before the name was found, so names containing a place could never be excluded.", "Pipeline reordered: labels and segments first, then governorate."],
+  ["major", "Skeptic", "«رقم» also means house, alley or building number, so a phone label rule would cut addresses in half.", "Phone labels count mid-line only before a 9+ digit run."]
+];
+const FIND = [
+  ["blocker", "Domain", "Generic neighbourhood words (الحي, النصر, الرياض…) silently assigned the wrong governorate.", "Removed as town keys; «الحي الصناعي» alone → ask the customer."],
+  ["major", "Skeptic", "A 10-digit number plus a stray 1-digit group was silently joined into a different valid number.", "New blocking warning phone_ambiguous_join; the record asks instead of guessing."],
+  ["major", "Builder", "When a customer corrected their number in a later line, the retracted number stayed as the phone.", "A correction cue makes the later number primary; warning phone_corrected."],
+  ["major", "Skeptic + User", "«على» folds to «علي», so a real trailing «علي» (a name or landmark) was cut from addresses.", "Trim only the exact spelling «على/الى»; «علي» is kept."],
+  ["major", "User", "«قطعة» (plot/block number in Najaf, Basra, Kut, Hilla addresses) was treated as a product word and deleted.", "«قطعة + number» is a plot: «الكوت حي الكفاءات القطعة 7» → Wasit, address kept."],
+  ["major", "Skeptic", "Given names that are also greetings (سلام، هلا، زين) were dropped even when labelled.", "Greeting words are removed only as whole segments: «الاسم: سلام عبد الله» is kept."],
+  ["major", "Domain", "In address-first messages («العنوان، الاسم، الرقم») the name ended up inside the address.", "The segment just before the phone is the name."],
+  ["major", "Quality", "A pass-1 fix caused a regression: words like «before» cut real English landmarks («before Family Mall»).", "Cut-word list narrowed; the landmark is kept. Caught because pass 2 re-tested pass 1's fixes."]
+];
+const SCORES = [["Single agent, run 1", 98.4, 91.9, 99.3, "$6.3"], ["Single agent, run 2", 99.4, 97.5, 98.5, "$5.0"], ["Council v1", 98.0, 96.9, 98.0, "$40.6"], ["Council v2 (this run)", 99.1, 98.6, 98.4, "$32.9", true]];
+
+const el = (t, c, h) => { const e = document.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; };
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+document.getElementById("seats").append(...SEATS.map(([n, k, s]) => el("div", "seat", `<h3>${esc(n)}</h3><div class="meta">${k} cases written</div><p>${esc(s)}</p>`)));
+
+const ledger = (id, rows) => document.getElementById(id).append(...rows.map(([sev, who, what, how]) =>
+  el("div", "row", `<span class="sev ${sev}">${sev}</span><div class="what"><div class="who">${esc(who)}</div><div>${esc(what)}</div><div class="how">${esc(how)}</div></div>`)));
+ledger("objections", OBJ); ledger("findings", FIND);
+
+document.getElementById("scores").append(...SCORES.map(([n, a, b, c, cost, hl]) => {
+  const tr = el("tr", hl ? "hl" : ""); const bar = (v) => `${v.toFixed(1)}<span class="bar" style="width:${Math.max(4, (v - 90) * 6)}px" aria-hidden="true"></span>`;
+  tr.innerHTML = `<td>${esc(n)}</td><td>${bar(a)}</td><td>${bar(b)}</td><td>${bar(c)}</td><td>${cost}</td>`; return tr; }));
+
+const FIELDS = [["name", "name"], ["phone", "phone"], ["governorate", "gov"], ["address", "addr"]];
+let filter = "all", current = 0;
+const msgs = document.getElementById("msgs"), panel = document.getElementById("panel");
+function showList() {
+  msgs.innerHTML = "";
+  EX.forEach((e, i) => {
+    if (filter !== "all" && e.winner !== filter) return;
+    const b = el("button", "", `<span class="snip" dir="auto">${esc(e.text.replace(/\n/g, " · "))}</span><span class="tag ${e.winner}">${e.winner === "council" ? "council better" : "single agent better"}</span>`);
+    b.type = "button"; b.setAttribute("aria-current", i === current ? "true" : "false");
+    b.addEventListener("click", () => { current = i; showList(); showPanel(); });
+    msgs.append(b);
+  });
+}
+const cell = (v, ok) => `<td class="${ok ? "" : "bad"}"><span class="${ok ? "ok" : "no"}">${ok ? "✓" : "✗"}</span> <span dir="auto">${v == null || v === "" ? "<span class='muted'>(empty)</span>" : esc(v)}</span></td>`;
+function showPanel() {
+  const e = EX[current];
+  const expGov = { baghdad: "Baghdad", basra: "Basra", najaf: "Najaf", anbar: "Anbar", maysan: "Maysan", qadisiyyah: "Qadisiyyah", duhok: "Duhok", halabja: "Halabja", sulaymaniyah: "Sulaymaniyah", erbil: "Erbil", diyala: "Diyala", babil: "Babil", wasit: "Wasit" };
+  const exp = { name: e.exp.name, phone: e.exp.phone, governorate: expGov[e.exp.governorate] || e.exp.governorate, address: e.exp.address ? "contains «" + e.exp.address + "»" : "(anything)" };
+  panel.innerHTML = `<div class="eyebrow">hidden set ${e.set} · case ${e.n}</div><div class="dm" dir="auto">${esc(e.text)}</div>
+  <div class="tablewrap"><table><thead><tr><th>field</th><th>correct</th><th>single agent</th><th>council</th></tr></thead><tbody>${
+    FIELDS.map(([k, ok]) => `<tr><td class="f">${k}</td><td dir="auto">${esc(exp[k] ?? "(empty)")}</td>${cell(e.base[k], e.bok[ok])}${cell(e.council[k], e.cok[ok])}</tr>`).join("")
+  }</tbody></table></div><p class="note">${esc(e.note)}</p>`;
+}
+document.querySelectorAll(".filters button").forEach((b) => b.addEventListener("click", () => {
+  filter = b.dataset.f; document.querySelectorAll(".filters button").forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+  const first = EX.findIndex((e) => filter === "all" || e.winner === filter); if (first >= 0) current = first; showList(); showPanel();
+}));
+showList(); showPanel();
+</script>
